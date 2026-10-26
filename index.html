@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập Nhật Sự Kiện Free Fire - GFF Font & Gradient</title>
+    <style>
+        /* --- KHAI BÁO FONT GFF --- */
+        @font-face {
+            font-family: 'GFF';
+            src: url('https://dafontstyle.io/download/gff-latin-font.html') format('woff2'),
+                 url('https://dafontstyle.io/download/gff-latin-font.html') format('woff');
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'GFF', Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #0f0f0f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #ffffff;
+            padding: 10px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: #121212;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+            border: 1px solid #222;
+        }
+
+        /* --- HEADER --- */
+        .header {
+            background-color: #121212;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        /* Khung chứa Avatar + nút thay avatar */
+        .avatar-wrapper {
+            position: relative;
+            width: 45px;
+            height: 45px;
+            flex-shrink: 0;
+            cursor: pointer;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .header-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #333;
+            border: 2px solid #444;
+            transition: border-color 0.2s, opacity 0.2s;
+            display: block;
+        }
+
+        /* Lớp phủ hiện chữ "ĐỔI" khi hover vào avatar */
+        .avatar-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #ffb800;
+            font-size: 9px;
+            font-weight: 900;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            border-radius: 50%;
+            text-transform: uppercase;
+        }
+
+        .avatar-wrapper:hover .avatar-overlay {
+            opacity: 1;
+        }
+
+        .avatar-wrapper:hover .header-avatar {
+            border-color: #ffb800;
+        }
+
+        .header-title {
+            font-family: 'GFF', Arial, sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.1;
+            
+            /* CHUYỂN MÀU VÀNG - ĐỎ */
+            background: linear-gradient(to right, #ffb800, #ff3c00, #ffb800);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.8));
+        }
+
+        /* --- NỘI DUNG CHÍNH --- */
+        .content {
+            padding: 15px;
+        }
+
+        .event-card {
+            background-color: #1a1a1a;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+
+        .banner-wrapper {
+            position: relative;
+            width: 100%;
+            background-color: #222;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .banner-img {
+            width: 100%;
+            display: block;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .btn-change-img {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ffb800;
+            border: 1px solid #ffb800;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .btn-change-img:hover {
+            background-color: #ffb800;
+            color: #000;
+        }
+
+        .event-details {
+            padding: 15px;
+        }
+
+        .event-title {
+            font-family: 'GFF', Arial, sans-serif;
+            text-align: center;
+            font-size: 19px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 8px;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .info-label {
+            font-family: 'GFF', Arial, sans-serif;
+            font-weight: 900;
+            color: #ffffff;
+            min-width: 110px;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            color: #d1d1d1;
+            font-weight: 500;
+        }
+
+        .link-row {
+            margin-top: 5px;
+            font-size: 13px;
+            line-height: 1.5;
+            word-break: break-all;
+        }
+
+        .link-label {
+            font-family: 'GFF', Arial, sans-serif;
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+            margin-right: 5px;
+        }
+
+        .link-value {
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .link-value:hover {
+            color: #ffb800;
+        }
+
+        /* --- NÚT XEM THÊM --- */
+        .btn-xem-them {
+            font-family: 'GFF', Arial, sans-serif;
+            width: 100%;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 18px 20px;
+            font-size: 22px;
+            font-weight: 900;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-xem-them:hover {
+            background-color: #2a2a2a;
+        }
+
+        .arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 12px solid #ffffff;
+            display: inline-block;
+            transform: translateY(2px);
+        }
+
+        /* --- NÚT FOOTER --- */
+        .footer-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-footer {
+            font-family: 'GFF', Arial, sans-serif;
+            flex: 1;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 10px;
+            font-size: 18px;
+            font-weight: 900;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-footer:hover {
+            background-color: #2a2a2a;
+        }
+
+        .btn-footer .arrow-down {
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-top: 9px solid #ffffff;
+            transform: translateY(1px);
+        }
+
+        @media (max-width: 360px) {
+            .header-title { font-size: 16px; }
+            .event-title { font-size: 16px; }
+            .info-row { font-size: 13px; }
+            .info-label { min-width: 95px; }
+            .btn-xem-them { font-size: 18px; padding: 15px; }
+            .btn-footer { font-size: 15px; padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header class="header">
+            <!-- Khung Avatar có thể click để thay ảnh -->
+            <div class="avatar-wrapper" onclick="changeAvatar()" title="Bấm để thay Avatar">
+                <img id="avatarImage" class="header-avatar" src="https://i.pinimg.com/736x/8f/3e/32/8f3e32f7f6a2c6f5e6b5a4b3c2d1e0f9.jpg" alt="Avatar">
+                <div class="avatar-overlay">Đổi</div>
+            </div>
+            <h1 class="header-title">Cập Nhật Sự Kiện Free Fire</h1>
+        </header>
+
+        <div class="content">
+            <div class="event-card">
+                <div class="banner-wrapper">
+                    <img id="bannerImage" class="banner-img" src="https://cdn.wildflamestudio.com/common/Local/VN/Splash_Upload/261007_0B47VN_FW3_Final_Shot_Dino_Shot.png" alt="FW3 Final Shot Dino Shot">
+                    <button class="btn-change-img" onclick="changeBannerImage()">Thay ảnh</button>
+                </div>
+                
+                <div class="event-details">
+                    <h2 class="event-title">FW3: Final Shot - Dino Shot</h2>
+                    
+                    <div class="info-row">
+                        <span class="info-label">BẮT ĐẦU:</span>
+                        <span class="info-value">00:00 7.10.2026</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">KẾT THÚC:</span>
+                        <span class="info-value">11:59 16.10.2026</span>
+                    </div>
+                    
+                    <div class="link-row">
+                        <span class="link-label">LINK BANNER :</span>
+                        <a id="bannerLink" href="https://cdn.wildflamestudio.com/common/Local/VN/Splash_Upload/261007_0B47VN_FW3_Final_Shot_Dino_Shot.png" class="link-value" target="_blank">
+                            https://cdn.wildflamestudio.com/common/Local/VN/Splash_Upload/261007_0B47VN_FW3_Final_Shot_Dino_Shot.png
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-xem-them">
+                XEM THÊM
+                <span class="arrow-down"></span>
+            </button>
+
+            <div class="footer-buttons">
+                <button class="btn-footer">AZERST</button>
+                <button class="btn-footer">
+                    SEVER : VN
+                    <span class="arrow-down"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT XỬ LÝ -->
+    <script>
+        // Hàm thay ảnh Banner
+        function changeBannerImage() {
+            const newUrl = prompt("Nhập link ảnh mới cho banner:", document.getElementById("bannerImage").src);
+            
+            if (newUrl && newUrl.trim() !== "") {
+                document.getElementById("bannerImage").src = newUrl;
+                document.getElementById("bannerLink").href = newUrl;
+                document.getElementById("bannerLink").innerText = newUrl;
+            }
+        }
+
+        // Hàm thay Avatar
+        function changeAvatar() {
+            const newUrl = prompt("Nhập link ảnh mới cho Avatar:", document.getElementById("avatarImage").src);
+            
+            if (newUrl && newUrl.trim() !== "") {
+                document.getElementById("avatarImage").src = newUrl;
+            }
+        }
+    </script>
+
+</body>
+</html>
