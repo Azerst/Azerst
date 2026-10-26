@@ -1,395 +1,332 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cập Nhật Sự Kiện Free Fire - GFF Font & Gradient</title>
-    <style>
-        /* --- KHAI BÁO FONT GFF --- */
-        @font-face {
-            font-family: 'GFF';
-            src: url('https://dafontstyle.io/download/gff-latin-font.html') format('woff2'),
-                 url('https://dafontstyle.io/download/gff-latin-font.html') format('woff');
-            font-weight: 100 900;
-            font-style: normal;
-            font-display: swap;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAB SỰ KIỆN | Trang chủ</title>
+  <style>
+    /* ===== FONT GFF ===== */
+    @font-face {
+      font-family: "GFF-Latin-Bold";
+      src: url("https://dl.dir.freefiremobile.com/common/web_event/common/fonts/website/GFFLatinW05-Bold.woff2") format("woff2"),
+           url("https://dl.dir.freefiremobile.com/common/web_event/common/fonts/website/GFFLatinW05-Bold.woff") format("woff");
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'GFF', Arial, Helvetica, sans-serif;
-        }
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            background-color: #0f0f0f;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: #ffffff;
-            padding: 10px;
-        }
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
 
-        .app-container {
-            width: 100%;
-            max-width: 480px;
-            background-color: #121212;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.9);
-            border: 1px solid #222;
-        }
+    body {
+      font-family: "GFF-Latin-Bold", system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background-image: url('https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/img/20228/b2b0012af7e3bfcdc90cd8744065e8ab.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2vh 2vw;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
 
-        /* --- HEADER --- */
-        .header {
-            background-color: #121212;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-bottom: 1px solid #2a2a2a;
-        }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 20% 30%, rgba(10, 20, 40, 0.45) 0%, rgba(0, 0, 0, 0.75) 100%);
+      z-index: -1;
+      pointer-events: none;
+    }
 
-        /* Khung chứa Avatar + nút thay avatar */
-        .avatar-wrapper {
-            position: relative;
-            width: 45px;
-            height: 45px;
-            flex-shrink: 0;
-            cursor: pointer;
-            border-radius: 50%;
-            overflow: hidden;
-        }
+    /* ===== KHUNG CHÍNH – TỶ LỆ 16:9 ===== */
+    .container {
+      width: min(96vw, calc(96vh * 16 / 9));
+      aspect-ratio: 16 / 9;
+      max-width: 1600px;
+      background: rgba(10, 15, 30, 0.55);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-radius: clamp(20px, 2.5vw, 48px);
+      padding: clamp(16px, 3vh, 48px) clamp(20px, 3.5vw, 60px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 
+        0 30px 50px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(255, 215, 0, 0.15) inset,
+        0 0 40px rgba(255, 215, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      animation: fadeUp 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+      overflow: hidden;
+      gap: clamp(6px, 1.2vh, 16px);
+    }
 
-        .header-avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            background-color: #333;
-            border: 2px solid #444;
-            transition: border-color 0.2s, opacity 0.2s;
-            display: block;
-        }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
 
-        /* Lớp phủ hiện chữ "ĐỔI" khi hover vào avatar */
-        .avatar-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: #ffb800;
-            font-size: 9px;
-            font-weight: 900;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.2s;
-            border-radius: 50%;
-            text-transform: uppercase;
-        }
+    /* ===== HEADER: LABEL + LOGO + TIÊU ĐỀ ===== */
+    .header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: clamp(4px, 0.8vh, 10px);
+      flex-shrink: 0;
+    }
 
-        .avatar-wrapper:hover .avatar-overlay {
-            opacity: 1;
-        }
+    .top-label {
+      font-family: "GFF-Latin-Bold", sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2.6rem);
+      letter-spacing: clamp(6px, 1.6vw, 14px);
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 0%, #ffe28a 40%, #ffb347 80%, #ffd966 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 20px rgba(255, 200, 50, 0.6);
+      filter: drop-shadow(0 4px 14px rgba(255, 180, 0, 0.45));
+      white-space: nowrap;
+      line-height: 1.1;
+    }
 
-        .avatar-wrapper:hover .header-avatar {
-            border-color: #ffb800;
-        }
+    /* LOGO + TIÊU ĐỀ – căn giữa cân đối */
+    .logo-title {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(14px, 2.2vw, 36px);
+      flex-wrap: nowrap;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
 
-        .header-title {
-            font-family: 'GFF', Arial, sans-serif;
-            font-size: 20px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            line-height: 1.1;
-            
-            /* CHUYỂN MÀU VÀNG - ĐỎ */
-            background: linear-gradient(to right, #ffb800, #ff3c00, #ffb800);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.8));
-        }
+    /* ẢNH TITLE (LOGO) – TĂNG KÍCH THƯỚC */
+    .logo-title img {
+      height: clamp(60px, 10vh, 140px);
+      width: auto;
+      max-width: 45%;
+      object-fit: contain;
+      flex-shrink: 0;
+      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.7)) brightness(1.05);
+      transition: transform 0.3s ease;
+    }
 
-        /* --- NỘI DUNG CHÍNH --- */
-        .content {
-            padding: 15px;
-        }
+    .logo-title img:hover {
+      transform: scale(1.03);
+    }
 
-        .event-card {
-            background-color: #1a1a1a;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-        }
+    .title-text {
+      font-family: "GFF-Latin-Bold", sans-serif;
+      font-size: clamp(1.4rem, 3.2vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: clamp(1px, 0.3vw, 3px);
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 0%, #ffe28a 40%, #ffb347 80%, #ffd966 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 18px rgba(255, 200, 50, 0.4);
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 0 1 auto;
+      min-width: 0;
+    }
 
-        .banner-wrapper {
-            position: relative;
-            width: 100%;
-            background-color: #222;
-            min-height: 150px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid #333;
-        }
+    /* ===== TAB – HÌNH ẢNH TAB (TO + NỀN TRONG SUỐT) ===== */
+    .tab-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      flex-shrink: 0;
+      padding: 0;
+    }
 
-        .banner-img {
-            width: 100%;
-            display: block;
-            height: auto;
-            object-fit: cover;
-        }
+    .tab-image {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      max-height: clamp(90px, 15vh, 190px);
+      object-fit: contain;
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.5));
+      transition: all 0.25s ease;
+    }
 
-        .btn-change-img {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #ffb800;
-            border: 1px solid #ffb800;
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-size: 12px;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            backdrop-filter: blur(4px);
-            transition: all 0.2s;
-            z-index: 10;
-        }
+    .tab-image:hover {
+      transform: translateY(-3px) scale(1.02);
+      filter: drop-shadow(0 14px 26px rgba(255, 215, 0, 0.35));
+    }
 
-        .btn-change-img:hover {
-            background-color: #ffb800;
-            color: #000;
-        }
+    /* ===== NỘI DUNG CHÍNH ===== */
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: clamp(8px, 1.6vh, 24px);
+      font-family: "GFF-Latin-Bold", sans-serif;
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+    }
 
-        .event-details {
-            padding: 15px;
-        }
+    .content h2 {
+      font-family: "GFF-Latin-Bold", sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2.6rem);
+      letter-spacing: clamp(6px, 1.6vw, 14px);
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 0%, #ffe28a 40%, #ffb347 80%, #ffd966 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 20px rgba(255, 200, 50, 0.6);
+      filter: drop-shadow(0 4px 14px rgba(255, 180, 0, 0.45));
+      line-height: 1.15;
+      max-width: 92%;
+    }
 
-        .event-title {
-            font-family: 'GFF', Arial, sans-serif;
-            text-align: center;
-            font-size: 19px;
-            font-weight: 900;
-            margin-bottom: 20px;
-            color: #ffffff;
-            text-transform: uppercase;
-        }
+    /* ===== KHUNG ẢNH NỀN CHỨA NỘI DUNG ===== */
+    .text-image-box {
+      width: 100%;
+      max-width: min(92%, 980px);
+      aspect-ratio: 16 / 7;
+      border-radius: clamp(14px, 1.8vw, 28px);
+      background-image: url('https://azerst-image-vn.vercel.app/images/orGmr7jOS.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(16px, 3vh, 44px) clamp(20px, 3vw, 50px);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      box-shadow: 
+        0 20px 40px -10px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+      isolation: isolate;
+      margin: 0 auto;
+    }
 
-        .info-row {
-            display: flex;
-            margin-bottom: 8px;
-            font-size: 15px;
-            line-height: 1.4;
-        }
+    .text-image-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(5, 10, 25, 0.55) 0%, rgba(0, 0, 0, 0.7) 100%);
+      z-index: -1;
+    }
 
-        .info-label {
-            font-family: 'GFF', Arial, sans-serif;
-            font-weight: 900;
-            color: #ffffff;
-            min-width: 110px;
-            text-transform: uppercase;
-        }
+    /* ===== FOOTER NHỎ ===== */
+    .footer-note {
+      font-size: clamp(0.6rem, 1vw, 0.95rem);
+      color: rgba(255, 255, 255, 0.45);
+      letter-spacing: clamp(1px, 0.25vw, 3px);
+      text-transform: uppercase;
+      font-family: "GFF-Latin-Bold", sans-serif;
+      flex-shrink: 0;
+      text-align: center;
+      white-space: nowrap;
+    }
 
-        .info-value {
-            color: #d1d1d1;
-            font-weight: 500;
-        }
+    /* ===== RESPONSIVE ===== */
+    @media (max-aspect-ratio: 1/1) {
+      .container {
+        aspect-ratio: auto;
+        height: auto;
+        min-height: 90vh;
+        padding: 24px 20px;
+        gap: 16px;
+      }
+      .logo-title {
+        flex-wrap: wrap;
+        max-width: 100%;
+      }
+      .title-text {
+        max-width: 100%;
+      }
+      .text-image-box {
+        aspect-ratio: auto;
+        min-height: 180px;
+      }
+    }
 
-        .link-row {
-            margin-top: 5px;
-            font-size: 13px;
-            line-height: 1.5;
-            word-break: break-all;
-        }
-
-        .link-label {
-            font-family: 'GFF', Arial, sans-serif;
-            font-weight: 900;
-            color: #ffffff;
-            text-transform: uppercase;
-            margin-right: 5px;
-        }
-
-        .link-value {
-            color: #a0a0a0;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .link-value:hover {
-            color: #ffb800;
-        }
-
-        /* --- NÚT XEM THÊM --- */
-        .btn-xem-them {
-            font-family: 'GFF', Arial, sans-serif;
-            width: 100%;
-            background-color: #1a1a1a;
-            color: #ffffff;
-            border: none;
-            border-radius: 12px;
-            padding: 18px 20px;
-            font-size: 22px;
-            font-weight: 900;
-            text-transform: uppercase;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
-            margin-bottom: 15px;
-            transition: background-color 0.2s;
-        }
-
-        .btn-xem-them:hover {
-            background-color: #2a2a2a;
-        }
-
-        .arrow-down {
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 12px solid #ffffff;
-            display: inline-block;
-            transform: translateY(2px);
-        }
-
-        /* --- NÚT FOOTER --- */
-        .footer-buttons {
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn-footer {
-            font-family: 'GFF', Arial, sans-serif;
-            flex: 1;
-            background-color: #1a1a1a;
-            color: #ffffff;
-            border: none;
-            border-radius: 12px;
-            padding: 16px 10px;
-            font-size: 18px;
-            font-weight: 900;
-            text-transform: uppercase;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .btn-footer:hover {
-            background-color: #2a2a2a;
-        }
-
-        .btn-footer .arrow-down {
-            border-left: 7px solid transparent;
-            border-right: 7px solid transparent;
-            border-top: 9px solid #ffffff;
-            transform: translateY(1px);
-        }
-
-        @media (max-width: 360px) {
-            .header-title { font-size: 16px; }
-            .event-title { font-size: 16px; }
-            .info-row { font-size: 13px; }
-            .info-label { min-width: 95px; }
-            .btn-xem-them { font-size: 18px; padding: 15px; }
-            .btn-footer { font-size: 15px; padding: 12px; }
-        }
-    </style>
+    @media (max-width: 480px) {
+      .logo-title {
+        flex-direction: column;
+        gap: 6px;
+      }
+      .logo-title img {
+        max-width: 65%;
+      }
+      .title-text {
+        max-width: 100%;
+        white-space: normal;
+        text-align: center;
+      }
+      .top-label {
+        letter-spacing: clamp(3px, 1vw, 6px);
+      }
+      .content h2 {
+        letter-spacing: clamp(3px, 1vw, 6px);
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <header class="header">
+      <div class="top-label">TITLE SỰ KIỆN</div>
 
-    <div class="app-container">
-        <header class="header">
-            <!-- Khung Avatar có thể click để thay ảnh -->
-            <div class="avatar-wrapper" onclick="changeAvatar()" title="Bấm để thay Avatar">
-                <img id="avatarImage" class="header-avatar" src="https://i.pinimg.com/736x/8f/3e/32/8f3e32f7f6a2c6f5e6b5a4b3c2d1e0f9.jpg" alt="Avatar">
-                <div class="avatar-overlay">Đổi</div>
-            </div>
-            <h1 class="header-title">Cập Nhật Sự Kiện Free Fire</h1>
-        </header>
+      <div class="logo-title">
+        <img src="https://azerst-image-vn.vercel.app/images/8F9d2wz2w.png" alt="Logo GFF">
+        <span class="title-text">TAB SỰ KIỆN</span>
+      </div>
+    </header>
 
-        <div class="content">
-            <div class="event-card">
-                <div class="banner-wrapper">
-                    <img id="bannerImage" class="banner-img" src="https://cdn.wildflamestudio.com/common/Local/VN/Splash_Upload/261007_0B47VN_FW3_Final_Shot_Dino_Shot.png" alt="FW3 Final Shot Dino Shot">
-                    <button class="btn-change-img" onclick="changeBannerImage()">Thay ảnh</button>
-                </div>
-                
-                <div class="event-details">
-                    <h2 class="event-title">FW3: Final Shot - Dino Shot</h2>
-                    
-                    <div class="info-row">
-                        <span class="info-label">BẮT ĐẦU:</span>
-                        <span class="info-value">00:00 7.10.2026</span>
-                    </div>
-                    
-                    <div class="info-row">
-                        <span class="info-label">KẾT THÚC:</span>
-                        <span class="info-value">11:59 16.10.2026</span>
-                    </div>
-                    
-                    <div class="link-row">
-                        <span class="link-label">LINK BANNER :</span>
-                        <a id="bannerLink" href="https://cdn.wildflamestudio.com/common/Local/VN/Splash_Upload/261007_0B47VN_FW3_Final_Shot_Dino_Shot.png" class="link-value" target="_blank">
-                            https://cdn.wildflamestudio.com/common/Local/VN/Splash_Upload/261007_0B47VN_FW3_Final_Shot_Dino_Shot.png
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <button class="btn-xem-them">
-                XEM THÊM
-                <span class="arrow-down"></span>
-            </button>
-
-            <div class="footer-buttons">
-                <button class="btn-footer">AZERST</button>
-                <button class="btn-footer">
-                    SEVER : VN
-                    <span class="arrow-down"></span>
-                </button>
-            </div>
-        </div>
+    <div class="tab-wrapper">
+      <img 
+        src="https://azerst-image-vn.vercel.app/images/wRZwa1Bqv.png" 
+        alt="Tab điều hướng" 
+        class="tab-image"
+        loading="lazy"
+      >
     </div>
 
-    <!-- JAVASCRIPT XỬ LÝ -->
-    <script>
-        // Hàm thay ảnh Banner
-        function changeBannerImage() {
-            const newUrl = prompt("Nhập link ảnh mới cho banner:", document.getElementById("bannerImage").src);
-            
-            if (newUrl && newUrl.trim() !== "") {
-                document.getElementById("bannerImage").src = newUrl;
-                document.getElementById("bannerLink").href = newUrl;
-                document.getElementById("bannerLink").innerText = newUrl;
-            }
-        }
+    <main class="content">
+      <h2>BACKGROUND SỰ KIỆN</h2>
+      <div class="text-image-box"></div>
+    </main>
 
-        // Hàm thay Avatar
-        function changeAvatar() {
-            const newUrl = prompt("Nhập link ảnh mới cho Avatar:", document.getElementById("avatarImage").src);
-            
-            if (newUrl && newUrl.trim() !== "") {
-                document.getElementById("avatarImage").src = newUrl;
-            }
-        }
-    </script>
-
+    <div class="footer-note">GFF © 2025 – All rights reserved</div>
+  </div>
 </body>
 </html>
