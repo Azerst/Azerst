@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>TAB SỰ KIỆN | Trang chủ</title>
   <style>
     /* ===== FONT GFF ===== */
@@ -16,30 +16,28 @@
     }
 
     /* ===== RESET & BASE ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html, body {
-      width: 100%;
-      height: 100%;
+    html {
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: transparent;
     }
+    html, body { width: 100%; min-height: 100%; }
 
     body {
+      /* Padding riêng từng cạnh, tôn trọng safe-area (tai thỏ) */
+      --pt: max(clamp(6px, 1.5vmin, 24px), env(safe-area-inset-top));
+      --pb: max(clamp(6px, 1.5vmin, 24px), env(safe-area-inset-bottom));
+      --pl: max(clamp(6px, 1.5vmin, 24px), env(safe-area-inset-left));
+      --pr: max(clamp(6px, 1.5vmin, 24px), env(safe-area-inset-right));
+
       font-family: "GFF-Latin-Bold", system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      background-image: url('https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/img/20228/b2b0012af7e3bfcdc90cd8744065e8ab.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+      background-color: #0a0f1e;
+      color: #fff;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2vh 2vw;
-      color: #ffffff;
+      padding: var(--pt) var(--pr) var(--pb) var(--pl);
       overflow-x: hidden;
     }
 
@@ -47,23 +45,36 @@
       content: "";
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at 20% 30%, rgba(10, 20, 40, 0.45) 0%, rgba(0, 0, 0, 0.75) 100%);
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(10, 20, 40, 0.45) 0%, rgba(0, 0, 0, 0.75) 100%),
+        url('https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/img/20228/b2b0012af7e3bfcdc90cd8744065e8ab.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       z-index: -1;
       pointer-events: none;
     }
 
-    /* ===== KHUNG CHÍNH – TỶ LỆ 16:9 ===== */
+    /* ===== KHUNG CHÍNH ===== */
     .container {
-      width: min(96vw, calc(96vh * 16 / 9));
+      /* margin: auto để vừa center vừa cho phép scroll khi content dài */
+      margin: auto;
+
+      /* --- Kích thước mặc định: 16:9 cho desktop / landscape rộng --- */
+      width: min(
+        100%,
+        calc((100dvh - var(--pt) - var(--pb)) * 16 / 9),
+        1600px
+      );
       aspect-ratio: 16 / 9;
-      max-width: 1600px;
+
       background: rgba(10, 15, 30, 0.55);
-      backdrop-filter: blur(16px) saturate(180%);
       -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border-radius: clamp(20px, 2.5vw, 48px);
-      padding: clamp(16px, 3vh, 48px) clamp(20px, 3.5vw, 60px);
+      backdrop-filter: blur(16px) saturate(180%);
+      border-radius: clamp(16px, 2.5vmin, 48px);
+      padding: clamp(14px, 2.5vmin, 40px) clamp(16px, 3vmin, 60px);
       border: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow: 
+      box-shadow:
         0 30px 50px rgba(0, 0, 0, 0.6),
         0 0 0 1px rgba(255, 215, 0, 0.15) inset,
         0 0 40px rgba(255, 215, 0, 0.1);
@@ -71,126 +82,157 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
+      gap: clamp(6px, 1.2vmin, 16px);
       animation: fadeUp 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
       overflow: hidden;
-      gap: clamp(6px, 1.2vh, 16px);
     }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px) scale(0.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* ===== HEADER: LABEL + LOGO + TIÊU ĐỀ ===== */
+    /* ============================================================
+       SIZING THEO THIẾT BỊ
+       ============================================================ */
+
+    /* 1) TABLET LANDSCAPE — iPad 4:3 → 16:10 → dùng 4:3 để lấp đầy */
+    @media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 16/10) {
+      .container {
+        width: min(
+          100%,
+          calc((100dvh - var(--pt) - var(--pb)) * 4 / 3),
+          1400px
+        );
+        aspect-ratio: 4 / 3;
+      }
+    }
+
+    /* 2) ĐIỆN THOẠI NẰM NGANG (màn hình thấp) — fill toàn bộ viewport */
+    @media (max-height: 560px) and (orientation: landscape) {
+      .container {
+        aspect-ratio: auto;
+        width: min(100%, 1600px);
+        height: calc(100dvh - var(--pt) - var(--pb));
+        max-height: none;
+      }
+    }
+
+    /* 3) PORTRAIT / VUÔNG (điện thoại dọc, iPad dọc) — auto height */
+    @media (max-aspect-ratio: 1/1) {
+      .container {
+        aspect-ratio: auto;
+        width: min(100%, 720px);
+        height: auto;
+        max-height: none;
+      }
+    }
+
+    /* 4) TABLET PORTRAIT LỚN (iPad) — rộng hơn cho thoáng */
+    @media (min-width: 700px) and (max-aspect-ratio: 1/1) {
+      .container {
+        width: min(100%, 960px);
+      }
+    }
+
+    /* 5) MÀN HÌNH RẤT RỘNG (4K / ultrawide) */
+    @media (min-width: 2000px) and (min-aspect-ratio: 16/10) {
+      .container {
+        max-width: 1800px;
+      }
+    }
+
+    /* ===== HEADER ===== */
     .header {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       text-align: center;
-      gap: clamp(4px, 0.8vh, 10px);
+      gap: clamp(4px, 0.8vmin, 10px);
       flex-shrink: 0;
     }
 
     .top-label {
       font-family: "GFF-Latin-Bold", sans-serif;
-      font-size: clamp(1.4rem, 3vw, 2.6rem);
-      letter-spacing: clamp(6px, 1.6vw, 14px);
+      font-size: clamp(0.9rem, 3.4vmin, 2.6rem);
+      letter-spacing: clamp(3px, 1.6vmin, 14px);
       text-transform: uppercase;
       background: linear-gradient(135deg, #ffffff 0%, #ffe28a 40%, #ffb347 80%, #ffd966 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 20px rgba(255, 200, 50, 0.6);
       filter: drop-shadow(0 4px 14px rgba(255, 180, 0, 0.45));
       white-space: nowrap;
       line-height: 1.1;
     }
 
-    /* LOGO + TIÊU ĐỀ – căn giữa cân đối */
-    .logo-title {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(14px, 2.2vw, 36px);
-      flex-wrap: nowrap;
-      width: 100%;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    /* ẢNH TITLE (LOGO) – TĂNG KÍCH THƯỚC */
-    .logo-title img {
-      height: clamp(60px, 10vh, 140px);
+    .logo-img {
+      height: clamp(48px, 9vmin, 120px);
       width: auto;
-      max-width: 45%;
+      max-width: 60%;
       object-fit: contain;
       flex-shrink: 0;
       filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.7)) brightness(1.05);
       transition: transform 0.3s ease;
     }
+    .logo-img:hover { transform: scale(1.03); }
 
-    .logo-title img:hover {
-      transform: scale(1.03);
+    /* ===== TAB SECTION ===== */
+    .tab-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(4px, 0.8vmin, 12px);
+      width: 100%;
+      flex-shrink: 0;
     }
 
-    .title-text {
+    .tab-title {
       font-family: "GFF-Latin-Bold", sans-serif;
-      font-size: clamp(1.4rem, 3.2vw, 2.8rem);
-      font-weight: 700;
-      letter-spacing: clamp(1px, 0.3vw, 3px);
+      font-size: clamp(0.95rem, 3.4vmin, 2.8rem);
+      letter-spacing: clamp(2px, 1.2vmin, 8px);
       text-transform: uppercase;
       background: linear-gradient(135deg, #ffffff 0%, #ffe28a 40%, #ffb347 80%, #ffd966 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 4px 18px rgba(255, 200, 50, 0.4);
+      filter: drop-shadow(0 4px 14px rgba(255, 180, 0, 0.35));
       line-height: 1.1;
+      text-align: center;
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      flex: 0 1 auto;
-      min-width: 0;
     }
 
-    /* ===== TAB – HÌNH ẢNH TAB (TO + NỀN TRONG SUỐT) ===== */
     .tab-wrapper {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 100%;
-      flex-shrink: 0;
-      padding: 0;
     }
 
     .tab-image {
       max-width: 100%;
-      width: auto;
       height: auto;
-      max-height: clamp(90px, 15vh, 190px);
+      max-height: clamp(60px, 12vmin, 160px);
       object-fit: contain;
-      background: transparent;
-      border-radius: 0;
-      padding: 0;
       filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.5));
-      transition: all 0.25s ease;
+      transition: transform 0.25s ease, filter 0.25s ease;
     }
-
     .tab-image:hover {
       transform: translateY(-3px) scale(1.02);
       filter: drop-shadow(0 14px 26px rgba(255, 215, 0, 0.35));
     }
 
-    /* ===== NỘI DUNG CHÍNH ===== */
+    /* ===== CONTENT ===== */
     .content {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      gap: clamp(8px, 1.6vh, 24px);
-      font-family: "GFF-Latin-Bold", sans-serif;
+      gap: clamp(6px, 1.6vmin, 24px);
       width: 100%;
       flex: 1;
       min-height: 0;
@@ -198,25 +240,26 @@
 
     .content h2 {
       font-family: "GFF-Latin-Bold", sans-serif;
-      font-size: clamp(1.4rem, 3vw, 2.6rem);
-      letter-spacing: clamp(6px, 1.6vw, 14px);
+      font-size: clamp(0.95rem, 3vmin, 2.6rem);
+      letter-spacing: clamp(3px, 1.6vmin, 14px);
       text-transform: uppercase;
       background: linear-gradient(135deg, #ffffff 0%, #ffe28a 40%, #ffb347 80%, #ffd966 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 20px rgba(255, 200, 50, 0.6);
       filter: drop-shadow(0 4px 14px rgba(255, 180, 0, 0.45));
       line-height: 1.15;
       max-width: 92%;
+      flex-shrink: 0;
     }
 
-    /* ===== KHUNG ẢNH NỀN CHỨA NỘI DUNG ===== */
     .text-image-box {
       width: 100%;
       max-width: min(92%, 980px);
-      aspect-ratio: 16 / 7;
-      border-radius: clamp(14px, 1.8vw, 28px);
+      flex: 1 1 auto;
+      min-height: 100px;
+      max-height: 100%;
+      border-radius: clamp(12px, 1.8vmin, 28px);
       background-image: url('https://azerst-image-vn.vercel.app/images/orGmr7jOS.png');
       background-size: cover;
       background-position: center;
@@ -226,11 +269,11 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: clamp(16px, 3vh, 44px) clamp(20px, 3vw, 50px);
+      padding: clamp(12px, 3vmin, 44px) clamp(16px, 3vmin, 50px);
       position: relative;
       overflow: hidden;
       border: 1px solid rgba(255, 215, 0, 0.25);
-      box-shadow: 
+      box-shadow:
         0 20px 40px -10px rgba(0, 0, 0, 0.7),
         0 0 0 1px rgba(255, 255, 255, 0.08) inset;
       isolation: isolate;
@@ -245,11 +288,11 @@
       z-index: -1;
     }
 
-    /* ===== FOOTER NHỎ ===== */
+    /* ===== FOOTER ===== */
     .footer-note {
-      font-size: clamp(0.6rem, 1vw, 0.95rem);
+      font-size: clamp(0.5rem, 1vmin, 0.95rem);
       color: rgba(255, 255, 255, 0.45);
-      letter-spacing: clamp(1px, 0.25vw, 3px);
+      letter-spacing: clamp(1px, 0.25vmin, 3px);
       text-transform: uppercase;
       font-family: "GFF-Latin-Bold", sans-serif;
       flex-shrink: 0;
@@ -257,47 +300,49 @@
       white-space: nowrap;
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ===== TINH CHỈNH NHỎ CHO PORTRAIT ===== */
     @media (max-aspect-ratio: 1/1) {
-      .container {
-        aspect-ratio: auto;
-        height: auto;
-        min-height: 90vh;
-        padding: 24px 20px;
-        gap: 16px;
-      }
-      .logo-title {
-        flex-wrap: wrap;
-        max-width: 100%;
-      }
-      .title-text {
-        max-width: 100%;
+      .content {
+        flex: 0 1 auto;
+        gap: clamp(10px, 2vmin, 20px);
       }
       .text-image-box {
-        aspect-ratio: auto;
-        min-height: 180px;
+        flex: 0 1 auto;
+        aspect-ratio: 16 / 9;
+        max-height: none;
+        min-height: 0;
+        width: 100%;
       }
+      .footer-note { white-space: normal; }
     }
 
-    @media (max-width: 480px) {
-      .logo-title {
-        flex-direction: column;
-        gap: 6px;
-      }
-      .logo-title img {
-        max-width: 65%;
-      }
-      .title-text {
-        max-width: 100%;
-        white-space: normal;
-        text-align: center;
-      }
+    /* Điện thoại nhỏ – dọc */
+    @media (max-width: 480px) and (max-aspect-ratio: 1/1) {
+      .container { border-radius: 16px; padding: 16px; gap: 12px; }
       .top-label {
-        letter-spacing: clamp(3px, 1vw, 6px);
+        font-size: clamp(0.85rem, 3.8vmin, 1.3rem);
+        letter-spacing: clamp(3px, 1.5vmin, 6px);
       }
+      .logo-img { height: clamp(40px, 9vmin, 70px); max-width: 70%; }
+      .tab-title {
+        font-size: clamp(0.9rem, 4vmin, 1.4rem);
+        letter-spacing: clamp(2px, 1vmin, 4px);
+        white-space: normal;
+      }
+      .tab-image { max-height: clamp(48px, 11vmin, 90px); }
       .content h2 {
-        letter-spacing: clamp(3px, 1vw, 6px);
+        font-size: clamp(0.85rem, 3.6vmin, 1.3rem);
+        letter-spacing: clamp(2px, 1vmin, 5px);
       }
+      .text-image-box { aspect-ratio: 4 / 3; }
+      .footer-note { font-size: 0.55rem; letter-spacing: 1px; }
+    }
+
+    /* ===== prefers-reduced-motion ===== */
+    @media (prefers-reduced-motion: reduce) {
+      .container { animation: none; }
+      .tab-image, .logo-img { transition: none; }
+      .tab-image:hover, .logo-img:hover { transform: none; }
     }
   </style>
 </head>
@@ -305,20 +350,16 @@
   <div class="container">
     <header class="header">
       <div class="top-label">TITLE SỰ KIỆN</div>
-
-      <div class="logo-title">
-        <img src="https://azerst-image-vn.vercel.app/images/8F9d2wz2w.png" alt="Logo GFF">
-        <span class="title-text">TAB SỰ KIỆN</span>
-      </div>
+      <img src="https://azerst-image-vn.vercel.app/images/8F9d2wz2w.png"
+           alt="Logo GFF" class="logo-img" loading="lazy">
     </header>
 
-    <div class="tab-wrapper">
-      <img 
-        src="https://azerst-image-vn.vercel.app/images/wRZwa1Bqv.png" 
-        alt="Tab điều hướng" 
-        class="tab-image"
-        loading="lazy"
-      >
+    <div class="tab-section">
+      <div class="tab-title">TAB SỰ KIỆN</div>
+      <div class="tab-wrapper">
+        <img src="https://azerst-image-vn.vercel.app/images/wRZwa1Bqv.png"
+             alt="Tab điều hướng" class="tab-image" loading="lazy">
+      </div>
     </div>
 
     <main class="content">
@@ -326,7 +367,7 @@
       <div class="text-image-box"></div>
     </main>
 
-    <div class="footer-note">GFF © 2025 – All rights reserved</div>
+    <div class="footer-note">© Azerst 2026 – All rights reserved</div>
   </div>
 </body>
 </html>
