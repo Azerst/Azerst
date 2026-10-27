@@ -25,7 +25,6 @@
     html, body { width: 100%; min-height: 100%; }
 
     body {
-      /* Padding riêng từng cạnh, tôn trọng safe-area (tai thỏ) */
       --pt: max(clamp(6px, 1.5vmin, 24px), env(safe-area-inset-top));
       --pb: max(clamp(6px, 1.5vmin, 24px), env(safe-area-inset-bottom));
       --pl: max(clamp(6px, 1.5vmin, 24px), env(safe-area-inset-left));
@@ -57,10 +56,8 @@
 
     /* ===== KHUNG CHÍNH ===== */
     .container {
-      /* margin: auto để vừa center vừa cho phép scroll khi content dài */
       margin: auto;
 
-      /* --- Kích thước mặc định: 16:9 cho desktop / landscape rộng --- */
       width: min(
         100%,
         calc((100dvh - var(--pt) - var(--pb)) * 16 / 9),
@@ -95,8 +92,6 @@
     /* ============================================================
        SIZING THEO THIẾT BỊ
        ============================================================ */
-
-    /* 1) TABLET LANDSCAPE — iPad 4:3 → 16:10 → dùng 4:3 để lấp đầy */
     @media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 16/10) {
       .container {
         width: min(
@@ -108,7 +103,6 @@
       }
     }
 
-    /* 2) ĐIỆN THOẠI NẰM NGANG (màn hình thấp) — fill toàn bộ viewport */
     @media (max-height: 560px) and (orientation: landscape) {
       .container {
         aspect-ratio: auto;
@@ -118,7 +112,6 @@
       }
     }
 
-    /* 3) PORTRAIT / VUÔNG (điện thoại dọc, iPad dọc) — auto height */
     @media (max-aspect-ratio: 1/1) {
       .container {
         aspect-ratio: auto;
@@ -128,14 +121,12 @@
       }
     }
 
-    /* 4) TABLET PORTRAIT LỚN (iPad) — rộng hơn cho thoáng */
     @media (min-width: 700px) and (max-aspect-ratio: 1/1) {
       .container {
         width: min(100%, 960px);
       }
     }
 
-    /* 5) MÀN HÌNH RẤT RỘNG (4K / ultrawide) */
     @media (min-width: 2000px) and (min-aspect-ratio: 16/10) {
       .container {
         max-width: 1800px;
@@ -154,6 +145,232 @@
       flex-shrink: 0;
     }
 
+    /* ============================================================
+       NÚT SỰ KIỆN - LIQUID GLASS (VÁT GÓC TRONG SUỐT)
+       ============================================================ */
+    .event-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(6px, 1.2vmin, 14px);
+      width: 100%;
+      flex-wrap: wrap;
+      margin-bottom: clamp(2px, 0.6vmin, 8px);
+    }
+
+    .event-btn {
+      --cut: 14px;            /* Độ lớn góc vát */
+      --border-w: 1.5px;      /* Độ dày viền kính */
+
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      font-family: "GFF-Latin-Bold", sans-serif;
+      font-size: clamp(0.72rem, 1.85vmin, 1.2rem);
+      letter-spacing: clamp(1px, 0.4vmin, 2px);
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.7),
+        0 0 12px rgba(255, 255, 255, 0.2);
+
+      padding: clamp(10px, 1.6vmin, 18px) clamp(22px, 3.2vmin, 46px);
+      cursor: pointer;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+      border: none;
+      outline: none;
+
+      /* Lớp ngoài cùng: viền kính phát sáng */
+      background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.75) 0%,
+        rgba(255, 255, 255, 0.25) 25%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.25) 75%,
+        rgba(255, 255, 255, 0.7) 100%
+      );
+
+      clip-path: polygon(
+        var(--cut) 0,
+        100% 0,
+        100% calc(100% - var(--cut)),
+        calc(100% - var(--cut)) 100%,
+        0 100%,
+        0 var(--cut)
+      );
+
+      isolation: isolate;
+
+      transition:
+        transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1),
+        filter 0.35s ease,
+        color 0.35s ease,
+        text-shadow 0.35s ease,
+        background 0.35s ease;
+
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+    }
+
+    /* ===== THÂN KÍNH (LỚP TRONG) ===== */
+    .event-btn::before {
+      content: "";
+      position: absolute;
+      inset: var(--border-w);
+      z-index: 1;
+
+      background:
+        /* Vệt sáng phía trên (highlight) */
+        radial-gradient(ellipse 130% 70% at 50% -25%,
+          rgba(255, 255, 255, 0.5) 0%,
+          rgba(255, 255, 255, 0.08) 45%,
+          transparent 70%),
+        /* Vệt phản chiếu phía dưới */
+        radial-gradient(ellipse 100% 60% at 50% 130%,
+          rgba(255, 255, 255, 0.2) 0%,
+          transparent 60%),
+        /* Nền kính chính */
+        linear-gradient(135deg,
+          rgba(255, 255, 255, 0.12) 0%,
+          rgba(255, 255, 255, 0.02) 50%,
+          rgba(255, 255, 255, 0.08) 100%
+        );
+
+      -webkit-backdrop-filter: blur(14px) saturate(180%) brightness(1.05);
+      backdrop-filter: blur(14px) saturate(180%) brightness(1.05);
+
+      clip-path: polygon(
+        calc(var(--cut) - var(--border-w) * 2) 0,
+        100% 0,
+        100% calc(100% - var(--cut) + var(--border-w) * 2),
+        calc(100% - var(--cut) + var(--border-w) * 2) 100%,
+        0 100%,
+        0 calc(var(--cut) - var(--border-w) * 2)
+      );
+    }
+
+    /* ===== VỆT SÁNG LƯỚT QUA (SHEEN) ===== */
+    .event-btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+
+      background: linear-gradient(105deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.3) 48%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0.3) 52%,
+        transparent 70%
+      );
+
+      transform: translateX(-120%);
+      transition: transform 0.9s cubic-bezier(0.3, 0.8, 0.3, 1);
+
+      clip-path: polygon(
+        var(--cut) 0,
+        100% 0,
+        100% calc(100% - var(--cut)),
+        calc(100% - var(--cut)) 100%,
+        0 100%,
+        0 var(--cut)
+      );
+    }
+
+    .event-btn:hover::after {
+      transform: translateX(120%);
+    }
+
+    /* Text trên cùng */
+    .event-btn span {
+      position: relative;
+      z-index: 3;
+    }
+
+    /* ---------- HOVER ---------- */
+    .event-btn:hover {
+      transform: translateY(-2px);
+      filter:
+        drop-shadow(0 6px 20px rgba(0, 0, 0, 0.5))
+        drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+      text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.7),
+        0 0 16px rgba(255, 255, 255, 0.45);
+    }
+
+    .event-btn:hover::before {
+      background:
+        radial-gradient(ellipse 130% 70% at 50% -25%,
+          rgba(255, 255, 255, 0.65) 0%,
+          rgba(255, 255, 255, 0.15) 45%,
+          transparent 70%),
+        radial-gradient(ellipse 100% 60% at 50% 130%,
+          rgba(255, 255, 255, 0.3) 0%,
+          transparent 60%),
+        linear-gradient(135deg,
+          rgba(255, 255, 255, 0.2) 0%,
+          rgba(255, 255, 255, 0.04) 50%,
+          rgba(255, 255, 255, 0.15) 100%
+        );
+    }
+
+    /* ---------- ACTIVE (ĐANG CHỌN - KÍNH VÀNG) ---------- */
+    .event-btn.active {
+      background: linear-gradient(135deg,
+        rgba(255, 235, 160, 0.9) 0%,
+        rgba(255, 200, 60, 0.45) 25%,
+        rgba(255, 200, 60, 0.3) 50%,
+        rgba(255, 200, 60, 0.45) 75%,
+        rgba(255, 235, 160, 0.85) 100%
+      );
+
+      color: #fff8e0;
+      text-shadow:
+        0 1px 4px rgba(120, 60, 0, 0.7),
+        0 0 16px rgba(255, 215, 0, 0.7);
+
+      filter:
+        drop-shadow(0 4px 16px rgba(255, 180, 20, 0.5))
+        drop-shadow(0 0 6px rgba(255, 235, 150, 0.4));
+    }
+
+    .event-btn.active::before {
+      background:
+        radial-gradient(ellipse 130% 70% at 50% -25%,
+          rgba(255, 250, 210, 0.7) 0%,
+          rgba(255, 220, 100, 0.15) 45%,
+          transparent 70%),
+        radial-gradient(ellipse 100% 60% at 50% 130%,
+          rgba(255, 220, 100, 0.35) 0%,
+          transparent 60%),
+        linear-gradient(135deg,
+          rgba(255, 220, 100, 0.35) 0%,
+          rgba(255, 200, 60, 0.15) 50%,
+          rgba(255, 220, 100, 0.3) 100%
+        );
+
+      -webkit-backdrop-filter: blur(14px) saturate(200%) brightness(1.15);
+      backdrop-filter: blur(14px) saturate(200%) brightness(1.15);
+    }
+
+    /* ---------- PRESSED ---------- */
+    .event-btn:active {
+      transform: translateY(0) scale(0.97);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 480px) {
+      .event-btn {
+        --cut: 10px;
+        --border-w: 1.25px;
+        padding: 8px 16px;
+        font-size: clamp(0.62rem, 2.6vmin, 0.85rem);
+      }
+    }
+
+    /* ===== TOP LABEL ===== */
     .top-label {
       font-family: "GFF-Latin-Bold", sans-serif;
       font-size: clamp(0.9rem, 3.4vmin, 2.6rem);
@@ -278,6 +495,7 @@
         0 0 0 1px rgba(255, 255, 255, 0.08) inset;
       isolation: isolate;
       margin: 0 auto;
+      transition: background-image 0.35s ease;
     }
 
     .text-image-box::before {
@@ -316,7 +534,6 @@
       .footer-note { white-space: normal; }
     }
 
-    /* Điện thoại nhỏ – dọc */
     @media (max-width: 480px) and (max-aspect-ratio: 1/1) {
       .container { border-radius: 16px; padding: 16px; gap: 12px; }
       .top-label {
@@ -341,14 +558,27 @@
     /* ===== prefers-reduced-motion ===== */
     @media (prefers-reduced-motion: reduce) {
       .container { animation: none; }
-      .tab-image, .logo-img { transition: none; }
-      .tab-image:hover, .logo-img:hover { transform: none; }
+      .tab-image, .logo-img, .event-btn { transition: none; }
+      .tab-image:hover, .logo-img:hover, .event-btn:hover { transform: none; }
+      .event-btn::after { display: none; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header class="header">
+      <nav class="event-nav" aria-label="Danh sách sự kiện">
+        <button type="button" class="event-btn active">
+          <span>Sự kiện 1</span>
+        </button>
+        <button type="button" class="event-btn">
+          <span>Sự kiện 2</span>
+        </button>
+        <button type="button" class="event-btn">
+          <span>Sự kiện 3</span>
+        </button>
+      </nav>
+
       <div class="top-label">TITLE SỰ KIỆN</div>
       <img src="https://azerst-image-vn.vercel.app/images/8F9d2wz2w.png"
            alt="Logo GFF" class="logo-img" loading="lazy">
@@ -369,5 +599,44 @@
 
     <div class="footer-note">© Azerst 2026 – All rights reserved</div>
   </div>
+
+  <script>
+    // Bộ ảnh theo từng sự kiện
+    const EVENT_IMAGES = {
+      1: {
+        logo: 'https://azerst-image-vn.vercel.app/images/8F9d2wz2w.png',
+        tab:  'https://azerst-image-vn.vercel.app/images/wRZwa1Bqv.png',
+        bg:   'https://azerst-image-vn.vercel.app/images/orGmr7jOS.png'
+      },
+      2: {
+        logo: 'https://azerst-image-vn.vercel.app/images/m4jwa7iMn.png',
+        tab:  'https://azerst-image-vn.vercel.app/images/Xl6yeAKFU.png',
+        bg:   'https://azerst-image-vn.vercel.app/images/QOoBqwG3R.png'
+      },
+      3: {
+        logo: 'https://azerst-image-vn.vercel.app/images/mw5xbjnMj.png',
+        tab:  'https://azerst-image-vn.vercel.app/images/GsqjGtxDt.png',
+        bg:   'https://azerst-image-vn.vercel.app/images/rGM5HmhEG.png'
+      }
+    };
+
+    const logoEl = document.querySelector('.logo-img');
+    const tabEl  = document.querySelector('.tab-image');
+    const bgEl   = document.querySelector('.text-image-box');
+
+    // Xử lý chuyển tab sự kiện + đổi ảnh tương ứng
+    document.querySelectorAll('.event-btn').forEach((btn, i) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.event-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const set = EVENT_IMAGES[i + 1];
+        if (!set) return;
+        logoEl.src = set.logo;
+        tabEl.src  = set.tab;
+        bgEl.style.backgroundImage = `url('${set.bg}')`;
+      });
+    });
+  </script>
 </body>
 </html>
