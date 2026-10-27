@@ -231,9 +231,7 @@
     }
     .event-btn:active { transform: translateY(0) scale(0.97); }
 
-    /* ========================================= */
     /* ===== TRANG BANNER: ACTIVE ĐỎ LOANG TRẮNG ===== */
-    /* ========================================= */
     #page-banner .event-btn.active {
       background:
         radial-gradient(ellipse 65% 85% at 15% 20%, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0) 55%),
@@ -251,17 +249,12 @@
         drop-shadow(0 4px 18px rgba(255,30,30,0.65))
         drop-shadow(0 0 12px rgba(255,150,150,0.5));
     }
-
-    /* Lớp ::before trên banner page khi active: trắng trong suốt hơn
-       để đỏ ở dưới loang lên + viền sáng */
     #page-banner .event-btn.active::before {
       background:
         radial-gradient(ellipse 130% 70% at 50% -25%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.1) 45%, transparent 70%),
         radial-gradient(ellipse 100% 60% at 50% 130%, rgba(255,220,220,0.18) 0%, transparent 60%),
         linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,220,220,0.04) 50%, rgba(255,255,255,0.12) 100%);
     }
-
-    /* Animation "loang" lan tỏa nhẹ (tôn trọng reduced motion) */
     @media (prefers-reduced-motion: no-preference) {
       #page-banner .event-btn.active {
         background-size: 200% 200%, 200% 200%, 200% 200%, 200% 200%, 200% 200%, 100% 100%;
@@ -269,15 +262,9 @@
         animation: redStainPulse 5s ease-in-out infinite alternate;
       }
       @keyframes redStainPulse {
-        0% {
-          background-position: 0% 0%, 100% 100%, 50% 0%, 0% 100%, 60% 50%, 0% 0%;
-        }
-        50% {
-          background-position: 30% 20%, 70% 80%, 45% 15%, 15% 85%, 55% 55%, 0% 0%;
-        }
-        100% {
-          background-position: 60% 40%, 40% 60%, 40% 30%, 30% 70%, 50% 60%, 0% 0%;
-        }
+        0% { background-position: 0% 0%, 100% 100%, 50% 0%, 0% 100%, 60% 50%, 0% 0%; }
+        50% { background-position: 30% 20%, 70% 80%, 45% 15%, 15% 85%, 55% 55%, 0% 0%; }
+        100% { background-position: 60% 40%, 40% 60%, 40% 30%, 30% 70%, 50% 60%, 0% 0%; }
       }
     }
 
@@ -461,6 +448,53 @@
     }
     .banner-card__img.is-loading { opacity: 0.4; }
 
+    /* ===== NÚT XEM NHỎ TRÊN TỪNG ẢNH ===== */
+    .banner-card__view {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      z-index: 5;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px 4px 8px;
+      font-family: "GFF-Latin-Bold", sans-serif;
+      font-size: 10px;
+      letter-spacing: 1.6px;
+      line-height: 1;
+      text-transform: uppercase;
+      color: #ffe28a;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 215, 0, 0.55);
+      clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+      -webkit-backdrop-filter: blur(10px) saturate(140%);
+      backdrop-filter: blur(10px) saturate(140%);
+      cursor: pointer;
+      outline: none;
+      box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.5),
+        inset 0 0 6px rgba(255, 200, 50, 0.1);
+      transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .banner-card__view:hover,
+    .banner-card__view:focus-visible {
+      background: rgba(255, 215, 0, 0.92);
+      color: #1a0f00;
+      transform: translateY(-1px) scale(1.06);
+      box-shadow:
+        0 6px 18px rgba(255, 200, 50, 0.55),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+    }
+    .banner-card__view:active { transform: translateY(0) scale(0.97); }
+    .banner-card__view svg {
+      display: block;
+      flex-shrink: 0;
+      stroke: currentColor;
+      fill: none;
+      transition: stroke 0.25s ease;
+    }
+
     .banner-card--portrait {
       max-width: min(320px, 65%);
       margin: 0 auto;
@@ -510,6 +544,8 @@
       .banner-card--portrait { max-width: 200px; }
       .banner-showcase { max-height: 55vh; gap: 12px; }
       .banner-card { padding: 8px 10px 10px; gap: 8px; }
+      .banner-card__view { bottom: 10px; right: 10px; font-size: 9px; padding: 3px 8px 3px 6px; }
+      .banner-card__view svg { width: 9px; height: 9px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -518,6 +554,81 @@
       .tab-image:hover, .logo-img:hover, .event-btn:hover, .banner-card:hover { transform: none; }
       .event-btn::after { display: none; }
       .block-label--tag { animation: none; }
+    }
+
+    /* ========================================= */
+    /* ========== LIGHTBOX XEM ẢNH ============= */
+    /* ========================================= */
+    .banner-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(16px, 3vmin, 44px);
+      background: rgba(0, 0, 0, 0.9);
+      -webkit-backdrop-filter: blur(12px) saturate(140%);
+      backdrop-filter: blur(12px) saturate(140%);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .banner-lightbox.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .banner-lightbox__close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "GFF-Latin-Bold", sans-serif;
+      font-size: 14px;
+      line-height: 1;
+      color: #ffe28a;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 9px 100%, 0 calc(100% - 9px));
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      outline: none;
+      transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+      z-index: 2;
+    }
+    .banner-lightbox__close:hover {
+      background: rgba(255, 215, 0, 0.92);
+      color: #1a0f00;
+      transform: scale(1.08);
+    }
+    .banner-lightbox__close:active { transform: scale(0.96); }
+
+    .banner-lightbox__img {
+      max-width: 100%;
+      max-height: calc(100vh - 100px);
+      max-height: calc(100dvh - 100px);
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow:
+        0 16px 45px rgba(0, 0, 0, 0.72),
+        0 0 0 1px rgba(255, 215, 0, 0.25);
+      -webkit-user-select: none; user-select: none;
+      -webkit-user-drag: none; user-drag: none;
+      -webkit-touch-callout: none;
+      pointer-events: none;
+      animation: lightboxImgIn 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+    @keyframes lightboxImgIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     /* ========================================= */
@@ -796,6 +907,13 @@
                    data-banner="16-9"
                    draggable="false"
                    loading="lazy">
+              <button type="button" class="banner-card__view" aria-label="Xem ảnh 16:9">
+                <svg viewBox="0 0 24 24" width="10" height="10" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <span>XEM</span>
+              </button>
             </div>
 
             <div class="banner-card banner-card--portrait">
@@ -806,6 +924,13 @@
                    data-banner="portrait"
                    draggable="false"
                    loading="lazy">
+              <button type="button" class="banner-card__view" aria-label="Xem ảnh 436x606">
+                <svg viewBox="0 0 24 24" width="10" height="10" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <span>XEM</span>
+              </button>
             </div>
 
             <div class="banner-card">
@@ -816,6 +941,13 @@
                    data-banner="256"
                    draggable="false"
                    loading="lazy">
+              <button type="button" class="banner-card__view" aria-label="Xem ảnh 256x107">
+                <svg viewBox="0 0 24 24" width="10" height="10" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <span>XEM</span>
+              </button>
             </div>
 
             <div class="banner-card">
@@ -826,6 +958,13 @@
                    data-banner="512"
                    draggable="false"
                    loading="lazy">
+              <button type="button" class="banner-card__view" aria-label="Xem ảnh 512x182">
+                <svg viewBox="0 0 24 24" width="10" height="10" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <span>XEM</span>
+              </button>
             </div>
 
           </div>
@@ -836,6 +975,12 @@
 
       <div class="footer-note">© Azerst 2026 – All rights reserved</div>
     </div>
+  </div>
+
+  <!-- ================= LIGHTBOX XEM ẢNH ================= -->
+  <div class="banner-lightbox" id="bannerLightbox" role="dialog" aria-modal="true" aria-label="Xem ảnh banner">
+    <button type="button" class="banner-lightbox__close" aria-label="Đóng">✕</button>
+    <img class="banner-lightbox__img" src="" alt="Ảnh banner phóng to" draggable="false">
   </div>
 
   <script>
@@ -861,7 +1006,7 @@
       }
     };
 
-    // ===== DỮ LIỆU BANNER (4 ảnh mỗi sự kiện) =====
+    // ===== DỮ LIỆU BANNER =====
     const BANNER_SETS = {
       "1": {
         "16-9":     'https://azerst-image-vn.vercel.app/images/eHDvjfDHK.jpg',
@@ -883,7 +1028,6 @@
       }
     };
 
-    // ===== NHÃN BANNER SỰ KIỆN THEO TỪNG EVENT =====
     const BANNER_LABELS = {
       "1": "TÀ LINH ĐỔ BỘ",
       "2": "MÀN TRÌNH DIỄN KINH DỊ",
@@ -906,7 +1050,6 @@
     document.querySelectorAll('.event-btn').forEach(btn => {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
-
         const page = this.closest('.page-section');
         if (!page) return;
 
@@ -931,11 +1074,9 @@
           const bannerSet = BANNER_SETS[key];
           if (!bannerSet) return;
 
-          // 1. Cập nhật chữ tiêu đề theo sự kiện
           const labelEl = page.querySelector('[data-banner-label]');
           const newLabel = BANNER_LABELS[key];
           if (labelEl && newLabel && labelEl.textContent !== newLabel) {
-            // Fade nhẹ khi đổi label
             labelEl.style.opacity = '0.4';
             setTimeout(() => {
               labelEl.textContent = newLabel;
@@ -943,25 +1084,51 @@
             }, 140);
           }
 
-          // 2. Cập nhật 4 ảnh banner
           page.querySelectorAll('.banner-card__img').forEach(img => {
             const slot = img.dataset.banner;
             const newSrc = bannerSet[slot];
             if (!newSrc) return;
             img.classList.add('is-loading');
             const preload = new Image();
-            preload.onload = () => {
-              img.src = newSrc;
-              img.classList.remove('is-loading');
-            };
-            preload.onerror = () => {
-              img.src = newSrc;
-              img.classList.remove('is-loading');
-            };
+            preload.onload = () => { img.src = newSrc; img.classList.remove('is-loading'); };
+            preload.onerror = () => { img.src = newSrc; img.classList.remove('is-loading'); };
             preload.src = newSrc;
           });
         }
       });
+    });
+
+    // ===== LIGHTBOX XEM ẢNH =====
+    const lightbox = document.getElementById('bannerLightbox');
+    const lightboxImg = lightbox.querySelector('.banner-lightbox__img');
+    const lightboxClose = lightbox.querySelector('.banner-lightbox__close');
+
+    function openLightbox(src) {
+      lightboxImg.src = src;
+      lightbox.classList.add('active');
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+    }
+
+    // Gắn click cho tất cả nút XEM (event delegation để tự động áp dụng cho cả nút thêm sau này)
+    document.addEventListener('click', (e) => {
+      const viewBtn = e.target.closest('.banner-card__view');
+      if (viewBtn) {
+        e.stopPropagation();
+        const card = viewBtn.closest('.banner-card');
+        const img = card ? card.querySelector('.banner-card__img') : null;
+        if (img && img.src) openLightbox(img.src);
+        return;
+      }
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
     });
 
     // ===== HELPERS: ĐÓNG TẤT CẢ MENU =====
@@ -975,16 +1142,13 @@
       });
     }
 
-    // ===== TOGGLE MENU =====
     document.querySelectorAll('.ff-menu-btn').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
         const wrapper = this.closest('.ff-menu-wrapper');
         const container = wrapper.closest('.container');
         const wasActive = wrapper.classList.contains('active');
-
         if (!wasActive) closeAllMenus();
-
         const isOpen = !wasActive;
         wrapper.classList.toggle('active', isOpen);
         this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
@@ -992,51 +1156,41 @@
       });
     });
 
-    // ===== CHỌN MỤC MENU → CHUYỂN TRANG =====
     document.querySelectorAll('.ff-menu-item').forEach(item => {
       item.addEventListener('click', function(e) {
         e.stopPropagation();
         const targetId = this.dataset.target;
-
         document.querySelectorAll('.ff-menu-item').forEach(i => {
           i.classList.toggle('active', i.dataset.target === targetId);
         });
-
         document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
         const targetPage = document.getElementById(targetId);
         if (targetPage) targetPage.classList.add('active');
-
         closeAllMenus();
       });
     });
 
-    // ===== CLICK BACKDROP → ĐÓNG MENU =====
     document.querySelectorAll('.menu-backdrop').forEach(bd => {
-      bd.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeAllMenus();
-      });
+      bd.addEventListener('click', (e) => { e.stopPropagation(); closeAllMenus(); });
     });
 
-    // ===== CLICK RA NGOÀI → ĐÓNG MENU =====
     document.addEventListener('click', (e) => {
       document.querySelectorAll('.ff-menu-wrapper.active').forEach(w => {
         if (!w.contains(e.target)) closeAllMenus();
       });
     });
 
-    // ===== PHÍM ESCAPE → ĐÓNG MENU =====
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeAllMenus();
     });
 
     // ===== CHỐNG LƯU ẢNH =====
-    document.querySelectorAll('.logo-img, .tab-image, .banner-card__img').forEach(img => {
+    document.querySelectorAll('.logo-img, .tab-image, .banner-card__img, .banner-lightbox__img').forEach(img => {
       img.addEventListener('contextmenu', e => e.preventDefault());
       img.addEventListener('dragstart', e => e.preventDefault());
       img.addEventListener('selectstart', e => e.preventDefault());
     });
-    document.querySelectorAll('.header, .tab-section, .banner-card, .banner-showcase').forEach(el => {
+    document.querySelectorAll('.header, .tab-section, .banner-card, .banner-showcase, .banner-lightbox').forEach(el => {
       el.addEventListener('contextmenu', e => e.preventDefault());
       el.addEventListener('dragstart', e => e.preventDefault());
       el.addEventListener('selectstart', e => e.preventDefault());
