@@ -40,7 +40,6 @@
       z-index: -1; pointer-events: none;
     }
 
-    /* Lớp bọc ngoài cùng của các trang để căn giữa */
     .page-wrapper {
       margin: auto;
       width: 100%;
@@ -49,6 +48,7 @@
     }
 
     .container {
+      position: relative;
       width: min(100%, calc((100dvh - var(--pt) - var(--pb)) * 16 / 9), 1600px);
       aspect-ratio: 16 / 9;
       background: rgba(10, 15, 30, 0.3);
@@ -62,7 +62,7 @@
       align-items: center; justify-content: space-between;
       gap: clamp(10px, 2vmin, 28px); 
       animation: fadeUp 0.5s cubic-bezier(0.2, 0.9, 0.3, 1);
-      overflow: hidden;
+      overflow: visible;
     }
     
     @keyframes fadeUp {
@@ -112,7 +112,6 @@
       pointer-events: none;
     }
 
-    /* ========== STACK 2 LABEL ========== */
     .block-labels {
       position: absolute;
       top: 0; left: 0; right: 0;
@@ -128,7 +127,6 @@
       pointer-events: none;
     }
 
-    /* ========== TAG KINH DỊ ========== */
     .block-label--tag {
       width: 100%;
       text-align: center;
@@ -174,7 +172,6 @@
       display: flex; align-items: center; justify-content: center;
       gap: clamp(6px, 1.2vmin, 14px);
       width: 100%; flex-wrap: wrap; flex-shrink: 0;
-      
       margin-top: clamp(40px, 8vmin, 70px); 
       margin-bottom: clamp(10px, 2vmin, 20px);
     }
@@ -333,77 +330,145 @@
     /* ========================================= */
     /* ========== MENU LIQUID GLASS ============ */
     /* ========================================= */
+    
     .ff-menu-wrapper {
-      position: fixed;
-      top: max(20px, env(safe-area-inset-top));
-      left: max(20px, env(safe-area-inset-left)); 
-      z-index: 9999;
+      position: absolute;
+      top: clamp(10px, 1.8vmin, 22px);
+      left: clamp(10px, 1.8vmin, 22px);
+      z-index: 100;
       font-family: "GFF-Latin-Bold", sans-serif;
     }
 
-    /* Nút Hamburger */
+    /* Nút Hamburger compact */
     .ff-menu-btn {
+      --btn-size: clamp(34px, 5vmin, 44px);
       position: relative;
       z-index: 2;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.1);
-      -webkit-backdrop-filter: blur(12px) saturate(150%);
-      backdrop-filter: blur(12px) saturate(150%);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      width: var(--btn-size);
+      height: var(--btn-size);
+      background: linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.08) 100%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      backdrop-filter: blur(14px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 4px;
-      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
-      transition: transform 0.2s ease, background 0.2s ease;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, box-shadow 0.35s ease, border-color 0.3s ease;
       outline: none;
-      box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.15), 0 4px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.15), 0 4px 14px rgba(0, 0, 0, 0.35);
     }
     .ff-menu-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: linear-gradient(135deg, rgba(255,255,255,0.38) 0%, rgba(255,255,255,0.16) 100%);
+      box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.25), 0 6px 18px rgba(0, 0, 0, 0.4);
     }
     .ff-menu-btn:active {
-      transform: scale(0.92);
+      transform: scale(0.9);
     }
+
     .ff-menu-btn span {
       display: block;
       width: 18px;
       height: 2px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       border-radius: 2px;
-      box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+      transition: transform 0.45s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.3s ease, background 0.3s ease;
+      transform-origin: center;
     }
 
-    /* Bảng Menu */
+    /* Morph 3 gạch -> X */
+    .ff-menu-wrapper.active .ff-menu-btn span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+      background: #ffe28a;
+      box-shadow: 0 0 10px rgba(255, 215, 100, 0.9);
+    }
+    .ff-menu-wrapper.active .ff-menu-btn span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    .ff-menu-wrapper.active .ff-menu-btn span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+      background: #ffe28a;
+      box-shadow: 0 0 10px rgba(255, 215, 100, 0.9);
+    }
+
+    .ff-menu-wrapper.active .ff-menu-btn {
+      background: linear-gradient(135deg, rgba(255,215,100,0.45) 0%, rgba(255,180,50,0.18) 100%);
+      border-color: rgba(255, 215, 100, 0.6);
+      animation: btnGlowPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes btnGlowPulse {
+      0%, 100% {
+        box-shadow: inset 0 0 15px rgba(255, 215, 100, 0.4),
+                    0 4px 20px rgba(255, 180, 30, 0.4),
+                    0 0 0 0 rgba(255, 215, 100, 0.4);
+      }
+      50% {
+        box-shadow: inset 0 0 20px rgba(255, 215, 100, 0.6),
+                    0 4px 25px rgba(255, 180, 30, 0.6),
+                    0 0 15px 3px rgba(255, 215, 100, 0.3);
+      }
+    }
+
+    /* Shockwave khi mở menu */
+    .ff-menu-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: var(--btn-size, 40px);
+      height: var(--btn-size, 40px);
+      margin: calc(var(--btn-size, 40px) / -2) 0 0 calc(var(--btn-size, 40px) / -2);
+      border-radius: 50%;
+      border: 2px solid rgba(255, 215, 100, 0.7);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .ff-menu-wrapper.active::after {
+      animation: shockwave 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+    }
+
+    @keyframes shockwave {
+      0% { opacity: 0.9; transform: scale(0.6); }
+      100% { opacity: 0; transform: scale(3.5); }
+    }
+
+    /* ========== PANEL MENU ========== */
     .ff-menu-panel {
       position: absolute;
       top: 0;
-      left: 0; 
+      left: 0;
       z-index: 1;
-      width: 280px; 
-      background: rgba(15, 20, 35, 0.45);
+      width: min(260px, calc(100vw - 60px));
+      background: rgba(15, 20, 35, 0.55);
       -webkit-backdrop-filter: blur(24px) saturate(180%);
       backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%);
       opacity: 0;
       visibility: hidden;
-      transform: translateX(-20px); 
-      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1), visibility 0.3s;
-      box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.5);
+      transform: scale(0.6) translateY(-15px);
+      transform-origin: top left;
+      transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0.35s;
+      box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.05), 0 20px 50px rgba(0, 0, 0, 0.65);
       display: flex;
       flex-direction: column;
+      /* Giảm khoảng trống phía trên: chỉ chừa đủ chỗ cho nút hamburger */
+      padding-top: calc(var(--btn-size, 40px) - 6px);
     }
 
     .ff-menu-panel::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.15) 0%, transparent 60%),
-                  radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+      background: radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.18) 0%, transparent 55%),
+                  radial-gradient(circle at 100% 100%, rgba(255, 215, 100, 0.08) 0%, transparent 50%);
       pointer-events: none;
       z-index: -1;
     }
@@ -411,82 +476,71 @@
     .ff-menu-wrapper.active .ff-menu-panel {
       opacity: 1;
       visibility: visible;
-      transform: translateX(0);
-    }
-
-    .panel-header {
-      height: 40px; 
-      display: flex;
-      align-items: center;
-      justify-content: flex-end; 
-      padding-right: 15px;
-      flex-shrink: 0;
-    }
-
-    .ff-close-btn {
-      background: transparent;
-      border: none;
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 20px;
-      font-family: Arial, sans-serif;
-      cursor: pointer;
-      transition: transform 0.2s, color 0.2s;
-      outline: none;
-      text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-    }
-    .ff-close-btn:hover {
-      transform: scale(1.2);
-      color: #fff;
+      transform: scale(1) translateY(0);
     }
 
     /* --- CẤU TRÚC MỤC MENU --- */
     .ff-menu-content {
-      padding: 0 15px 20px 15px;
+      padding: 0 10px 12px 10px;
     }
 
     .ff-menu-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 15px;
+      gap: 5px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 10px;
     }
 
+    /* ===== KHUNG VUÔNG (bỏ bo góc) ===== */
     .ff-menu-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 15px;
+      padding: 11px 14px;
       background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 0;
       cursor: pointer;
       transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateX(-12px);
+    }
+
+    /* Stagger animation khi mở */
+    .ff-menu-wrapper.active .ff-menu-item:nth-child(1) {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 0.35s ease 0.12s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s, background 0.3s ease, border-color 0.3s ease;
+    }
+    .ff-menu-wrapper.active .ff-menu-item:nth-child(2) {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 0.35s ease 0.2s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s, background 0.3s ease, border-color 0.3s ease;
     }
 
     .ff-menu-item:hover {
       background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.22);
     }
 
-    /* Trạng thái Đang hoạt động (Active) */
     .ff-menu-item.active {
-      background: linear-gradient(90deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
-      border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: inset 3px 0 0 #fff, inset 0 0 10px rgba(255,255,255,0.1);
+      background: linear-gradient(90deg, rgba(255,215,100,0.18) 0%, rgba(255,215,100,0.04) 100%);
+      border-color: rgba(255, 215, 100, 0.4);
+      box-shadow: inset 3px 0 0 #ffe28a, inset 0 0 12px rgba(255,215,100,0.1);
     }
 
     .ff-menu-item .menu-text {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.8);
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.82);
       letter-spacing: 1.5px;
       font-weight: 700;
     }
 
     .ff-menu-item.active .menu-text {
-      color: #fff;
-      text-shadow: 0 0 8px rgba(255,255,255,0.5);
+      color: #fff8e0;
+      text-shadow: 0 0 8px rgba(255, 215, 100, 0.6);
     }
 
     /* Hiệu ứng ẩn hiện trang */
@@ -496,47 +550,47 @@
     .page-section.active {
       display: flex;
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ff-menu-panel,
+      .ff-menu-btn span,
+      .ff-menu-item {
+        transition: none !important;
+        animation: none !important;
+      }
+      .ff-menu-wrapper::after { display: none; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- ================= MENU LIQUID GLASS ================= -->
-  <div class="ff-menu-wrapper" id="ffMenuWrapper">
-    
-    <div class="ff-menu-panel" id="ffMenuPanel">
-      <div class="panel-header">
-        <button class="ff-close-btn" id="ffMenuClose" aria-label="Đóng menu">✕</button>
-      </div>
-      
-      <!-- Nội dung Menu -->
-      <div class="ff-menu-content">
-        <ul class="ff-menu-list">
-          <!-- Mục 1: ASSETS (Đang hoạt động) -->
-          <li class="ff-menu-item active" data-target="page-assets">
-            <span class="menu-text">ASSETS</span>
-          </li>
-          
-          <!-- Mục 2: BANNER -->
-          <li class="ff-menu-item" data-target="page-banner">
-            <span class="menu-text">BANNER</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <button class="ff-menu-btn" id="ffMenuBtn" aria-label="Mở menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
-  <!-- ============================================ -->
-
   <!-- ================= KHU VỰC CHỨA CÁC TRANG ================= -->
   
-  <!-- TRANG 1: ASSETS (Chứa toàn bộ nội dung sự kiện 1,2,3) -->
+  <!-- TRANG 1: ASSETS -->
   <div class="page-wrapper page-section active" id="page-assets">
     <div class="container">
+
+      <!-- MENU LIQUID GLASS -->
+      <div class="ff-menu-wrapper" data-menu>
+        <div class="ff-menu-panel">
+          <div class="ff-menu-content">
+            <ul class="ff-menu-list">
+              <li class="ff-menu-item active" data-target="page-assets">
+                <span class="menu-text">ASSETS</span>
+              </li>
+              <li class="ff-menu-item" data-target="page-banner">
+                <span class="menu-text">BANNER</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <button class="ff-menu-btn" aria-label="Mở menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
       <!-- CỤM NÚT SỰ KIỆN -->
       <nav class="event-nav" aria-label="Danh sách sự kiện">
         <button type="button" class="event-btn active" data-event="1">
@@ -584,9 +638,31 @@
     </div>
   </div>
 
-  <!-- TRANG 2: BANNER (Trang trống chờ phát triển) -->
+  <!-- TRANG 2: BANNER -->
   <div class="page-wrapper page-section" id="page-banner">
     <div class="container" style="justify-content: center; align-items: center; height: 50vh; min-height: 300px;">
+      
+      <!-- MENU LIQUID GLASS -->
+      <div class="ff-menu-wrapper" data-menu>
+        <div class="ff-menu-panel">
+          <div class="ff-menu-content">
+            <ul class="ff-menu-list">
+              <li class="ff-menu-item" data-target="page-assets">
+                <span class="menu-text">ASSETS</span>
+              </li>
+              <li class="ff-menu-item active" data-target="page-banner">
+                <span class="menu-text">BANNER</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <button class="ff-menu-btn" aria-label="Mở menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
       <h1 style="color: #fff; text-transform: uppercase; letter-spacing: 2px;">Trang Banner</h1>
       <p style="color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 10px;">(Nội dung đang được phát triển...)</p>
     </div>
@@ -642,56 +718,46 @@
       });
     });
 
-    // ===== LOGIC ĐÓNG MỞ MENU =====
-    const ffMenuWrapper = document.getElementById('ffMenuWrapper');
-    const ffMenuBtn = document.getElementById('ffMenuBtn');
-    const ffMenuClose = document.getElementById('ffMenuClose');
+    // ===== LOGIC MENU =====
+    const menuWrappers = document.querySelectorAll('.ff-menu-wrapper');
 
-    ffMenuBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      ffMenuWrapper.classList.toggle('active');
-    });
-
-    ffMenuClose.addEventListener('click', () => {
-      ffMenuWrapper.classList.remove('active');
+    menuWrappers.forEach(wrapper => {
+      const btn = wrapper.querySelector('.ff-menu-btn');
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menuWrappers.forEach(w => { if (w !== wrapper) w.classList.remove('active'); });
+        wrapper.classList.toggle('active');
+      });
     });
 
     document.addEventListener('click', (e) => {
-      if (ffMenuWrapper.classList.contains('active') && !ffMenuWrapper.contains(e.target)) {
-        ffMenuWrapper.classList.remove('active');
-      }
+      menuWrappers.forEach(wrapper => {
+        if (wrapper.classList.contains('active') && !wrapper.contains(e.target)) {
+          wrapper.classList.remove('active');
+        }
+      });
     });
 
-    // ===== LOGIC CHUYỂN TRANG (ASSETS <-> BANNER) =====
-    const menuItems = document.querySelectorAll('.ff-menu-item');
-    const pageSections = document.querySelectorAll('.page-section');
-
-    menuItems.forEach(item => {
-      item.addEventListener('click', function() {
-        // 1. Cập nhật giao diện menu (Active)
-        menuItems.forEach(i => i.classList.remove('active'));
-        this.classList.add('active');
-        
-        // 2. Lấy ID trang cần hiển thị
+    // ===== LOGIC CHUYỂN TRANG =====
+    document.querySelectorAll('.ff-menu-item').forEach(item => {
+      item.addEventListener('click', function (e) {
+        e.stopPropagation();
         const targetId = this.dataset.target;
 
-        // 3. Ẩn tất cả các trang
-        pageSections.forEach(page => {
+        document.querySelectorAll('.ff-menu-item').forEach(i => i.classList.remove('active'));
+        document.querySelectorAll(`.ff-menu-item[data-target="${targetId}"]`).forEach(i => i.classList.add('active'));
+
+        document.querySelectorAll('.page-section').forEach(page => {
           page.classList.remove('active');
-          // Reset lại animation (nếu cần) để hiệu ứng fadeUp chạy lại
           page.style.animation = 'none';
-          page.offsetHeight; /* Trigger reflow */
-          page.style.animation = null; 
+          void page.offsetHeight;
+          page.style.animation = null;
         });
 
-        // 4. Hiện trang được chọn
         const targetPage = document.getElementById(targetId);
-        if (targetPage) {
-          targetPage.classList.add('active');
-        }
+        if (targetPage) targetPage.classList.add('active');
 
-        // 5. Tự động đóng menu sau khi chọn
-        ffMenuWrapper.classList.remove('active');
+        menuWrappers.forEach(w => w.classList.remove('active'));
       });
     });
   </script>
