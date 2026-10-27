@@ -22,7 +22,8 @@
       --pl: max(clamp(6px, 1.5vmin, 24px), env(safe-area-inset-left));
       --pr: max(clamp(6px, 1.5vmin, 24px), env(safe-area-inset-right));
       font-family: "GFF-Latin-Bold", system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      background-color: #0a0f1e; color: #fff;
+      background-color: #0a0f1e;
+      color: #fff;
       min-height: 100vh; min-height: 100dvh;
       display: flex;
       padding: var(--pt) var(--pr) var(--pb) var(--pl);
@@ -52,11 +53,10 @@
       box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6);
       display: flex; flex-direction: column;
       align-items: center; justify-content: space-between;
-      gap: clamp(20px, 4vmin, 56px);
+      gap: clamp(16px, 3vmin, 44px);
       animation: fadeUp 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
       overflow: hidden;
     }
-
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px) scale(0.98); }
       to   { opacity: 1; transform: translateY(0) scale(1); }
@@ -78,73 +78,90 @@
       .container { max-width: 1800px; }
     }
 
+    /* ========== WRAPPER ========== */
     .block-wrap {
       position: relative; width: 100%;
       display: flex; flex-direction: column;
       padding-top: clamp(22px, 3.2vmin, 48px);
     }
     .header-wrap, .tab-wrap { flex-shrink: 0; }
+    .block-wrap.header-wrap { padding-top: clamp(44px, 6vmin, 88px); }
     .content-wrap { flex: 1; min-height: 0; }
     .content-wrap > .content { flex: 1; min-height: 0; }
 
-    /* ============================================================
-       LABEL – CHỮ LOANG VÀNG TRẮNG CAM (1 LỚP, NHẸ GPU)
-       ============================================================ */
+    /* ========== LABEL CHUNG ========== */
     .block-label {
       position: absolute; top: 0; left: 0;
-      text-align: left;
-      padding-left: clamp(6px, 1vmin, 18px);
+      text-align: left; padding-left: clamp(6px, 1vmin, 18px);
       z-index: 5;
       font-family: "GFF-Latin-Bold", sans-serif;
-      font-size: clamp(0.78rem, 2.4vmin, 2rem);
-      letter-spacing: clamp(2px, 1vmin, 9px);
-      text-transform: uppercase;
-      line-height: 1; white-space: nowrap;
+      font-size: clamp(0.72rem, 2.2vmin, 1.85rem);
+      letter-spacing: clamp(1.5px, 0.85vmin, 8px);
+      text-transform: uppercase; line-height: 1; white-space: nowrap;
+      background: linear-gradient(135deg, #ffffff 0%, #ffe28a 40%, #ffb347 80%, #ffd966 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 4px 14px rgba(255, 180, 0, 0.55)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.85));
+      pointer-events: none;
+    }
 
-      /* 1 gradient duy nhất, size 250%, animate vị trí → màu loang từ 4 phía */
-      background-image: radial-gradient(
-        circle at center,
+    /* ========== STACK 2 LABEL ========== */
+    .block-labels {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 0 clamp(6px, 1vmin, 18px);
+      display: flex; flex-direction: column; align-items: flex-start;
+      gap: clamp(3px, 0.6vmin, 8px);
+      z-index: 5;
+      pointer-events: none;
+      text-align: left;
+    }
+    .block-labels .block-label {
+      position: relative; top: auto; left: auto; padding-left: 0;
+      pointer-events: none;
+    }
+
+    /* ========== TAG KINH DỊ – CĂN GIỮA + TO + LOANG ĐỎ-TRẮNG ========== */
+    .block-label--tag {
+      width: 100%;
+      text-align: center;
+      white-space: normal;
+      font-size: clamp(0.85rem, 2.4vmin, 1.65rem);
+      letter-spacing: clamp(1.2px, 0.9vmin, 6px);
+
+      background: linear-gradient(
+        115deg,
         #ffffff 0%,
-        #fff6c9 16%,
-        #ffd966 34%,
-        #ffb347 54%,
-        #ffd966 72%,
-        #fff6c9 88%,
+        #ffd6d6 8%,
+        #ff3a3a 18%,
+        #ff8a8a 26%,
+        #ffffff 34%,
+        #b00000 44%,
+        #ff2e2e 52%,
+        #ffffff 60%,
+        #ff5252 68%,
+        #a00000 76%,
+        #ffd6d6 86%,
         #ffffff 100%
       );
-      background-size: 250% 250%;
-      background-repeat: no-repeat;
-      background-position: 15% 15%;
-
+      background-size: 200% 100%;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
 
       filter:
-        drop-shadow(0 3px 10px rgba(255, 170, 0, 0.55))
-        drop-shadow(0 2px 3px rgba(0, 0, 0, 0.85));
-      pointer-events: none;
+        drop-shadow(0 3px 14px rgba(255, 40, 40, 0.75))
+        drop-shadow(0 0 6px rgba(255, 255, 255, 0.35))
+        drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
 
-      /* will-change báo browser tối ưu lớp này, tránh ảnh hưởng phần khác */
-      will-change: background-position;
-      animation: labelBloom 7s ease-in-out infinite;
+      animation: tagShift 6s ease-in-out infinite alternate;
     }
 
-    .header-wrap   .block-label { animation-duration: 6s;   animation-delay: 0s;    }
-    .tab-wrap      .block-label { animation-duration: 7.5s; animation-delay: -2s;   }
-    .content-wrap  .block-label { animation-duration: 6.8s; animation-delay: -4.5s; }
-
-    @keyframes labelBloom {
-      0%   { background-position: 15% 15%; }
-      25%  { background-position: 85% 15%; }
-      50%  { background-position: 85% 85%; }
-      75%  { background-position: 15% 85%; }
-      100% { background-position: 15% 15%; }
+    @keyframes tagShift {
+      from { background-position: 0% 50%; }
+      to   { background-position: 100% 50%; }
     }
 
-    /* ============================================================
-       GLASS PANEL
-       ============================================================ */
+    /* ========== GLASS PANEL ========== */
     .glass-panel {
       position: relative;
       --cut: clamp(12px, 2.5vmin, 22px);
@@ -155,14 +172,12 @@
         rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.15) 25%,
         rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.15) 75%,
         rgba(255, 255, 255, 0.6) 100%);
-      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)),
-        calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
       filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
       border: none !important; box-shadow: none !important; border-radius: 0 !important;
     }
     .glass-panel::before {
-      content: "";
-      position: absolute; inset: var(--border-w); z-index: -1;
+      content: ""; position: absolute; inset: var(--border-w); z-index: -1;
       background:
         radial-gradient(ellipse 120% 60% at 50% -10%, rgba(180, 210, 255, 0.18) 0%, transparent 65%),
         radial-gradient(ellipse 100% 60% at 50% 110%, rgba(255, 200, 100, 0.08) 0%, transparent 60%),
@@ -172,21 +187,17 @@
       clip-path: polygon(
         calc(var(--cut) - var(--border-w) * 2) 0, 100% 0,
         100% calc(100% - var(--cut) + var(--border-w) * 2),
-        calc(100% - var(--cut) + var(--border-w) * 2) 100%, 0 100%,
-        0 calc(var(--cut) - var(--border-w) * 2));
+        calc(100% - var(--cut) + var(--border-w) * 2) 100%,
+        0 100%, 0 calc(var(--cut) - var(--border-w) * 2));
     }
 
-    /* ============================================================
-       NAV NÚT – ĐẢM BẢO LUÔN CLICK ĐƯỢC (Z-INDEX CAO)
-       ============================================================ */
+    /* ========== NÚT SỰ KIỆN ========== */
     .event-nav {
-      position: relative;
-      z-index: 100;               /* ✅ luôn nằm trên mọi thứ */
+      position: relative; z-index: 20;
       display: flex; align-items: center; justify-content: center;
       gap: clamp(6px, 1.2vmin, 14px);
       width: 100%; flex-wrap: wrap; flex-shrink: 0;
     }
-
     .event-btn {
       --cut: 14px; --border-w: 1.5px;
       position: relative;
@@ -195,58 +206,43 @@
       font-size: clamp(0.72rem, 1.85vmin, 1.2rem);
       letter-spacing: clamp(1px, 0.4vmin, 2px);
       text-transform: uppercase; color: #fff;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7), 0 0 12px rgba(255, 255, 255, 0.2);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7), 0 0 12px rgba(255,255,255,0.2);
       padding: clamp(10px, 1.6vmin, 18px) clamp(22px, 3.2vmin, 46px);
       cursor: pointer; white-space: nowrap;
       border: none; outline: none;
-      pointer-events: auto;       /* ✅ luôn nhận click */
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.25) 25%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.25) 75%, rgba(255, 255, 255, 0.7) 100%);
+      background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.25) 25%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.25) 75%, rgba(255,255,255,0.7) 100%);
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
       isolation: isolate;
-      transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1), filter 0.35s ease, color 0.35s ease, text-shadow 0.35s ease, background 0.35s ease;
+      transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1), filter 0.35s ease, text-shadow 0.35s ease, background 0.35s ease;
       filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
     }
     .event-btn::before {
-      content: "";
-      position: absolute; inset: var(--border-w); z-index: 1;
-      background: radial-gradient(ellipse 130% 70% at 50% -25%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.08) 45%, transparent 70%),
-        radial-gradient(ellipse 100% 60% at 50% 130%, rgba(255, 255, 255, 0.2) 0%, transparent 60%),
-        linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.08) 100%);
+      content: ""; position: absolute; inset: var(--border-w); z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(ellipse 130% 70% at 50% -25%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.08) 45%, transparent 70%), radial-gradient(ellipse 100% 60% at 50% 130%, rgba(255,255,255,0.2) 0%, transparent 60%), linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.08) 100%);
       -webkit-backdrop-filter: blur(14px) saturate(180%) brightness(1.05);
       backdrop-filter: blur(14px) saturate(180%) brightness(1.05);
       clip-path: polygon(calc(var(--cut) - var(--border-w) * 2) 0, 100% 0, 100% calc(100% - var(--cut) + var(--border-w) * 2), calc(100% - var(--cut) + var(--border-w) * 2) 100%, 0 100%, 0 calc(var(--cut) - var(--border-w) * 2));
     }
     .event-btn::after {
-      content: "";
-      position: absolute; inset: 0; z-index: 2;
-      pointer-events: none;
-      background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.3) 48%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.3) 52%, transparent 70%);
+      content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.3) 48%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.3) 52%, transparent 70%);
       transform: translateX(-120%);
       transition: transform 0.9s cubic-bezier(0.3, 0.8, 0.3, 1);
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
     }
     .event-btn:hover::after { transform: translateX(120%); }
-    .event-btn span { position: relative; z-index: 3; }
+    .event-btn span { position: relative; z-index: 3; pointer-events: none; }
     .event-btn:hover {
       transform: translateY(-2px);
-      filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7), 0 0 16px rgba(255, 255, 255, 0.45);
-    }
-    .event-btn:hover::before {
-      background: radial-gradient(ellipse 130% 70% at 50% -25%, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.15) 45%, transparent 70%),
-        radial-gradient(ellipse 100% 60% at 50% 130%, rgba(255, 255, 255, 0.3) 0%, transparent 60%),
-        linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(255, 255, 255, 0.15) 100%);
+      filter: drop-shadow(0 6px 20px rgba(0,0,0,0.5)) drop-shadow(0 0 8px rgba(255,255,255,0.3));
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7), 0 0 16px rgba(255,255,255,0.45);
     }
     .event-btn.active {
-      background: linear-gradient(135deg, rgba(255, 235, 160, 0.9) 0%, rgba(255, 200, 60, 0.45) 25%, rgba(255, 200, 60, 0.3) 50%, rgba(255, 200, 60, 0.45) 75%, rgba(255, 235, 160, 0.85) 100%);
+      background: linear-gradient(135deg, rgba(255,235,160,0.9) 0%, rgba(255,200,60,0.45) 25%, rgba(255,200,60,0.3) 50%, rgba(255,200,60,0.45) 75%, rgba(255,235,160,0.85) 100%);
       color: #fff8e0;
-      text-shadow: 0 1px 4px rgba(120, 60, 0, 0.7), 0 0 16px rgba(255, 215, 0, 0.7);
-      filter: drop-shadow(0 4px 16px rgba(255, 180, 20, 0.5)) drop-shadow(0 0 6px rgba(255, 235, 150, 0.4));
-    }
-    .event-btn.active::before {
-      background: radial-gradient(ellipse 130% 70% at 50% -25%, rgba(255, 250, 210, 0.7) 0%, rgba(255, 220, 100, 0.15) 45%, transparent 70%),
-        radial-gradient(ellipse 100% 60% at 50% 130%, rgba(255, 220, 100, 0.35) 0%, transparent 60%),
-        linear-gradient(135deg, rgba(255, 220, 100, 0.35) 0%, rgba(255, 200, 60, 0.15) 50%, rgba(255, 220, 100, 0.3) 100%);
+      text-shadow: 0 1px 4px rgba(120,60,0,0.7), 0 0 16px rgba(255,215,0,0.7);
+      filter: drop-shadow(0 4px 16px rgba(255,180,20,0.5)) drop-shadow(0 0 6px rgba(255,235,150,0.4));
     }
     .event-btn:active { transform: translateY(0) scale(0.97); }
 
@@ -254,22 +250,44 @@
       .event-btn { --cut: 10px; --border-w: 1.25px; padding: 8px 16px; font-size: clamp(0.62rem, 2.6vmin, 0.85rem); }
     }
 
-    .header { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: clamp(4px, 0.8vmin, 10px); flex-shrink: 0; }
-    .logo-img { height: clamp(48px, 9vmin, 120px); width: auto; max-width: 60%; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.7)) brightness(1.05); transition: transform 0.3s ease; }
+    /* ========== HEADER ========== */
+    .header {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; gap: clamp(4px, 0.8vmin, 10px); flex-shrink: 0;
+    }
+    .logo-img {
+      height: clamp(48px, 9vmin, 120px); width: auto; max-width: 60%;
+      object-fit: contain; flex-shrink: 0;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.7)) brightness(1.05);
+      transition: transform 0.3s ease;
+    }
     .logo-img:hover { transform: scale(1.03); }
 
-    .tab-section { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(4px, 0.8vmin, 12px); width: 100%; flex-shrink: 0; }
+    /* ========== TAB ========== */
+    .tab-section {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: clamp(4px, 0.8vmin, 12px); width: 100%; flex-shrink: 0;
+    }
     .tab-wrapper { display: flex; justify-content: center; align-items: center; width: 100%; }
-    .tab-image { max-width: 100%; height: auto; max-height: clamp(60px, 12vmin, 160px); object-fit: contain; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.5)); transition: transform 0.25s ease, filter 0.25s ease; }
-    .tab-image:hover { transform: translateY(-3px) scale(1.02); filter: drop-shadow(0 14px 26px rgba(255, 215, 0, 0.35)); }
+    .tab-image {
+      max-width: 100%; height: auto; max-height: clamp(60px, 12vmin, 160px);
+      object-fit: contain;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,0.5));
+      transition: transform 0.25s ease, filter 0.25s ease;
+    }
+    .tab-image:hover { transform: translateY(-3px) scale(1.02); filter: drop-shadow(0 14px 26px rgba(255,215,0,0.35)); }
 
-    .content { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: clamp(6px, 1.6vmin, 24px); width: 100%; flex: 1; min-height: 0; }
-
+    /* ========== CONTENT ========== */
+    .content {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; gap: clamp(6px, 1.6vmin, 24px);
+      width: 100%; flex: 1; min-height: 0;
+    }
     .text-image-box {
       width: 100%; max-width: min(100%, 980px);
       flex: 1 1 auto; min-height: 100px; max-height: 100%;
       border-radius: clamp(12px, 1.8vmin, 28px);
-      background-color: #0f1730;   /* nền dự phòng khi chưa có ảnh */
+      background-color: #0d1424;
       background-image: url('https://azerst-image-vn.vercel.app/images/orGmr7jOS.png');
       background-size: cover; background-position: center; background-repeat: no-repeat;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -277,37 +295,49 @@
       padding: clamp(12px, 3vmin, 44px) clamp(16px, 3vmin, 50px);
       position: relative; overflow: hidden;
       border: 1px solid rgba(255, 215, 0, 0.25);
-      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.08) inset;
       isolation: isolate; margin: 0 auto;
       transition: background-image 0.35s ease;
     }
     .text-image-box::before {
-      content: "";
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(5, 10, 25, 0.55) 0%, rgba(0, 0, 0, 0.7) 100%);
-      z-index: -1;
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background: linear-gradient(180deg, rgba(5,10,25,0.55) 0%, rgba(0,0,0,0.7) 100%);
     }
 
-    .footer-note { font-size: clamp(0.5rem, 1vmin, 0.95rem); color: rgba(255, 255, 255, 0.45); letter-spacing: clamp(1px, 0.25vmin, 3px); text-transform: uppercase; font-family: "GFF-Latin-Bold", sans-serif; flex-shrink: 0; text-align: center; white-space: nowrap; }
+    .footer-note {
+      font-size: clamp(0.5rem, 1vmin, 0.95rem);
+      color: rgba(255,255,255,0.45);
+      letter-spacing: clamp(1px, 0.25vmin, 3px);
+      text-transform: uppercase;
+      font-family: "GFF-Latin-Bold", sans-serif;
+      flex-shrink: 0; text-align: center; white-space: nowrap;
+    }
 
+    /* ========== PORTRAIT ========== */
     @media (max-aspect-ratio: 1/1) {
-      .container { gap: clamp(16px, 3vmin, 32px); }
+      .container { gap: clamp(14px, 2.5vmin, 28px); }
       .block-wrap { padding-top: clamp(20px, 3vmin, 34px); }
+      .block-wrap.header-wrap { padding-top: clamp(42px, 5.6vmin, 66px); }
       .content-wrap { flex: 0 1 auto; }
       .content { flex: 0 1 auto; gap: clamp(10px, 2vmin, 20px); }
       .text-image-box { flex: 0 1 auto; aspect-ratio: 16 / 9; max-height: none; min-height: 0; width: 100%; }
       .footer-note { white-space: normal; }
       .glass-panel { padding: clamp(12px, 3vmin, 20px) !important; }
-      .block-label { font-size: clamp(0.72rem, 3vmin, 1.2rem); letter-spacing: clamp(1.5px, 0.8vmin, 5px); }
+      .block-label { font-size: clamp(0.7rem, 2.8vmin, 1.15rem); letter-spacing: clamp(1.2px, 0.7vmin, 4px); }
+      .block-label--tag { font-size: clamp(0.85rem, 2.8vmin, 1.35rem); letter-spacing: clamp(1px, 0.6vmin, 3.5px); }
     }
+
     @media (max-width: 480px) and (max-aspect-ratio: 1/1) {
-      .container { border-radius: 16px; padding: 16px; gap: 14px; }
-      .block-wrap { padding-top: 22px; }
+      .container { border-radius: 16px; padding: 16px; gap: 12px; }
+      .block-wrap { padding-top: 20px; }
+      .block-wrap.header-wrap { padding-top: 42px; }
       .logo-img { height: clamp(40px, 9vmin, 70px); max-width: 70%; }
       .tab-image { max-height: clamp(48px, 11vmin, 90px); }
       .text-image-box { aspect-ratio: 4 / 3; }
       .footer-note { font-size: 0.55rem; letter-spacing: 1px; }
-      .block-label { font-size: clamp(0.65rem, 3.4vmin, 1rem); letter-spacing: clamp(1px, 0.6vmin, 3px); padding-left: 4px; }
+      .block-label { font-size: clamp(0.62rem, 3.2vmin, 0.95rem); letter-spacing: clamp(1px, 0.6vmin, 3px); padding-left: 4px; }
+      .block-label--tag { font-size: clamp(0.78rem, 3.4vmin, 1.15rem); letter-spacing: clamp(0.8px, 0.5vmin, 2.5px); }
+      .block-labels { padding-left: 4px; gap: 3px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -315,26 +345,38 @@
       .tab-image, .logo-img, .event-btn { transition: none; }
       .tab-image:hover, .logo-img:hover, .event-btn:hover { transform: none; }
       .event-btn::after { display: none; }
-      .block-label { animation: none; }
+      .block-label--tag { animation: none; }
     }
   </style>
 </head>
 <body>
   <div class="container">
 
+    <!-- CỤM NÚT SỰ KIỆN -->
     <nav class="event-nav" aria-label="Danh sách sự kiện">
-      <button type="button" class="event-btn active"><span>Sự kiện 1</span></button>
-      <button type="button" class="event-btn"><span>Sự kiện 2</span></button>
-      <button type="button" class="event-btn"><span>Sự kiện 3</span></button>
+      <button type="button" class="event-btn active" data-event="1">
+        <span>Sự kiện 1</span>
+      </button>
+      <button type="button" class="event-btn" data-event="2">
+        <span>Sự kiện 2</span>
+      </button>
+      <button type="button" class="event-btn" data-event="3">
+        <span>Sự kiện 3</span>
+      </button>
     </nav>
 
+    <!-- KHỐI 1: TITLE -->
     <div class="block-wrap header-wrap">
       <header class="header glass-panel">
         <img src="https://azerst-image-vn.vercel.app/images/8F9d2wz2w.png" alt="Logo GFF" class="logo-img" loading="lazy">
       </header>
-      <div class="block-label">TITLE SỰ KIỆN</div>
+      <div class="block-labels">
+        <div class="block-label block-label--tag" data-tag>MÀN TRÌNH DIỄN KINH DỊ</div>
+        <div class="block-label">TITLE SỰ KIỆN</div>
+      </div>
     </div>
 
+    <!-- KHỐI 2: TAB -->
     <div class="block-wrap tab-wrap">
       <div class="tab-section glass-panel">
         <div class="tab-wrapper">
@@ -344,6 +386,7 @@
       <div class="block-label">TAB SỰ KIỆN</div>
     </div>
 
+    <!-- KHỐI 3: BACKGROUND -->
     <div class="block-wrap content-wrap">
       <main class="content glass-panel">
         <div class="text-image-box"></div>
@@ -351,23 +394,28 @@
       <div class="block-label">BACKGROUND SỰ KIỆN</div>
     </div>
 
+    <!-- FOOTER -->
     <div class="footer-note">© Azerst 2026 – All rights reserved</div>
 
   </div>
 
   <script>
+    // ===== CẤU HÌNH ẢNH + TAG TEXT THEO TỪNG SỰ KIỆN =====
     const EVENT_IMAGES = {
-      1: {
+      "1": {
+        tag:  "MÀN TRÌNH DIỄN KINH DỊ",
         logo: 'https://azerst-image-vn.vercel.app/images/8F9d2wz2w.png',
         tab:  'https://azerst-image-vn.vercel.app/images/wRZwa1Bqv.png',
         bg:   'https://azerst-image-vn.vercel.app/images/orGmr7jOS.png'
       },
-      2: {
+      "2": {
+        tag:  "MÓNG VUỐT TAI HOẠ",
         logo: 'https://azerst-image-vn.vercel.app/images/m4jwa7iMn.png',
         tab:  'https://azerst-image-vn.vercel.app/images/Xl6yeAKFU.png',
         bg:   'https://azerst-image-vn.vercel.app/images/QOoBqwG3R.png'
       },
-      3: {
+      "3": {
+        tag:  "HÀNH ĐỘNG HALLOWEEN",
         logo: 'https://azerst-image-vn.vercel.app/images/mw5xbjnMj.png',
         tab:  'https://azerst-image-vn.vercel.app/images/GsqjGtxDt.png',
         bg:   'https://azerst-image-vn.vercel.app/images/rGM5HmhEG.png'
@@ -377,40 +425,31 @@
     const logoEl = document.querySelector('.logo-img');
     const tabEl  = document.querySelector('.tab-image');
     const bgEl   = document.querySelector('.text-image-box');
+    const tagEl  = document.querySelector('[data-tag]');
 
-    // ✅ Preload toàn bộ ảnh trước để tránh "mất background" khi ảnh chưa kịp tải
-    const preloaded = {};
+    // Preload ảnh
     Object.values(EVENT_IMAGES).forEach(set => {
-      ['logo', 'tab', 'bg'].forEach(key => {
-        const img = new Image();
-        img.src = set[key];
-        preloaded[set[key]] = img;
+      ['logo', 'tab', 'bg'].forEach(k => {
+        if (set[k]) { const img = new Image(); img.src = set[k]; }
       });
     });
 
-    // ✅ Chỉ set background khi ảnh load thành công; lỗi thì GIỮ NGUYÊN nền cũ
-    function safeSetBg(url) {
-      if (!url) return;
-      const test = new Image();
-      test.onload  = () => { bgEl.style.backgroundImage = `url('${url}')`; };
-      test.onerror = () => { console.warn('[EVENT] Background ảnh lỗi, giữ nền cũ:', url); };
-      test.src = url;
-    }
+    // Chuyển tab
+    document.querySelectorAll('.event-btn').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
 
-    document.querySelectorAll('.event-btn').forEach((btn, i) => {
-      btn.addEventListener('click', () => {
         document.querySelectorAll('.event-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        this.classList.add('active');
 
-        const set = EVENT_IMAGES[i + 1];
-        if (!set) return;
+        const key = this.dataset.event;
+        const set = EVENT_IMAGES[key];
+        if (!set) { console.warn('[Event] Không có dữ liệu cho key:', key); return; }
 
-        // Logo & Tab: set trực tiếp (browser tự cache từ preload)
-        logoEl.src = set.logo;
-        tabEl.src  = set.tab;
-
-        // Background: an toàn có fallback
-        safeSetBg(set.bg);
+        if (logoEl && set.logo) logoEl.src = set.logo;
+        if (tabEl  && set.tab)  tabEl.src  = set.tab;
+        if (bgEl   && set.bg)   bgEl.style.backgroundImage = `url('${set.bg}')`;
+        if (tagEl  && set.tag)  tagEl.textContent = set.tag;
       });
     });
   </script>
