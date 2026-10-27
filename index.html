@@ -40,8 +40,15 @@
       z-index: -1; pointer-events: none;
     }
 
-    .container {
+    /* Lớp bọc ngoài cùng của các trang để căn giữa */
+    .page-wrapper {
       margin: auto;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
       width: min(100%, calc((100dvh - var(--pt) - var(--pb)) * 16 / 9), 1600px);
       aspect-ratio: 16 / 9;
       background: rgba(10, 15, 30, 0.3);
@@ -53,10 +60,11 @@
       box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6);
       display: flex; flex-direction: column;
       align-items: center; justify-content: space-between;
-      gap: clamp(16px, 3vmin, 44px);
-      animation: fadeUp 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+      gap: clamp(10px, 2vmin, 28px); 
+      animation: fadeUp 0.5s cubic-bezier(0.2, 0.9, 0.3, 1);
       overflow: hidden;
     }
+    
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px) scale(0.98); }
       to   { opacity: 1; transform: translateY(0) scale(1); }
@@ -120,42 +128,21 @@
       pointer-events: none;
     }
 
-    /* ========== TAG KINH DỊ – CĂN GIỮA + TO + LOANG ĐỎ-TRẮNG ========== */
+    /* ========== TAG KINH DỊ ========== */
     .block-label--tag {
       width: 100%;
       text-align: center;
       white-space: normal;
       font-size: clamp(0.85rem, 2.4vmin, 1.65rem);
       letter-spacing: clamp(1.2px, 0.9vmin, 6px);
-
-      background: linear-gradient(
-        115deg,
-        #ffffff 0%,
-        #ffd6d6 8%,
-        #ff3a3a 18%,
-        #ff8a8a 26%,
-        #ffffff 34%,
-        #b00000 44%,
-        #ff2e2e 52%,
-        #ffffff 60%,
-        #ff5252 68%,
-        #a00000 76%,
-        #ffd6d6 86%,
-        #ffffff 100%
-      );
+      background: linear-gradient(115deg, #ffffff 0%, #ffd6d6 8%, #ff3a3a 18%, #ff8a8a 26%, #ffffff 34%, #b00000 44%, #ff2e2e 52%, #ffffff 60%, #ff5252 68%, #a00000 76%, #ffd6d6 86%, #ffffff 100%);
       background-size: 200% 100%;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-
-      filter:
-        drop-shadow(0 3px 14px rgba(255, 40, 40, 0.75))
-        drop-shadow(0 0 6px rgba(255, 255, 255, 0.35))
-        drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
-
+      filter: drop-shadow(0 3px 14px rgba(255, 40, 40, 0.75)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.35)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
       animation: tagShift 6s ease-in-out infinite alternate;
     }
-
     @keyframes tagShift {
       from { background-position: 0% 50%; }
       to   { background-position: 100% 50%; }
@@ -168,27 +155,17 @@
       --border-w: 1.5px;
       width: 100%;
       padding: clamp(12px, 2.5vmin, 24px) !important;
-      background: linear-gradient(135deg,
-        rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.15) 25%,
-        rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.15) 75%,
-        rgba(255, 255, 255, 0.6) 100%);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.15) 25%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.15) 75%, rgba(255, 255, 255, 0.6) 100%);
       clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
       filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
       border: none !important; box-shadow: none !important; border-radius: 0 !important;
     }
     .glass-panel::before {
       content: ""; position: absolute; inset: var(--border-w); z-index: -1;
-      background:
-        radial-gradient(ellipse 120% 60% at 50% -10%, rgba(180, 210, 255, 0.18) 0%, transparent 65%),
-        radial-gradient(ellipse 100% 60% at 50% 110%, rgba(255, 200, 100, 0.08) 0%, transparent 60%),
-        linear-gradient(180deg, rgba(15, 22, 40, 0.35) 0%, rgba(5, 10, 20, 0.55) 100%);
+      background: radial-gradient(ellipse 120% 60% at 50% -10%, rgba(180, 210, 255, 0.18) 0%, transparent 65%), radial-gradient(ellipse 100% 60% at 50% 110%, rgba(255, 200, 100, 0.08) 0%, transparent 60%), linear-gradient(180deg, rgba(15, 22, 40, 0.35) 0%, rgba(5, 10, 20, 0.55) 100%);
       -webkit-backdrop-filter: blur(22px) saturate(180%) brightness(1.06);
       backdrop-filter: blur(22px) saturate(180%) brightness(1.06);
-      clip-path: polygon(
-        calc(var(--cut) - var(--border-w) * 2) 0, 100% 0,
-        100% calc(100% - var(--cut) + var(--border-w) * 2),
-        calc(100% - var(--cut) + var(--border-w) * 2) 100%,
-        0 100%, 0 calc(var(--cut) - var(--border-w) * 2));
+      clip-path: polygon(calc(var(--cut) - var(--border-w) * 2) 0, 100% 0, 100% calc(100% - var(--cut) + var(--border-w) * 2), calc(100% - var(--cut) + var(--border-w) * 2) 100%, 0 100%, 0 calc(var(--cut) - var(--border-w) * 2));
     }
 
     /* ========== NÚT SỰ KIỆN ========== */
@@ -197,6 +174,9 @@
       display: flex; align-items: center; justify-content: center;
       gap: clamp(6px, 1.2vmin, 14px);
       width: 100%; flex-wrap: wrap; flex-shrink: 0;
+      
+      margin-top: clamp(40px, 8vmin, 70px); 
+      margin-bottom: clamp(10px, 2vmin, 20px);
     }
     .event-btn {
       --cut: 14px; --border-w: 1.5px;
@@ -316,6 +296,7 @@
     /* ========== PORTRAIT ========== */
     @media (max-aspect-ratio: 1/1) {
       .container { gap: clamp(14px, 2.5vmin, 28px); }
+      .event-nav { margin-top: clamp(35px, 6vmin, 55px); margin-bottom: 0; }
       .block-wrap { padding-top: clamp(20px, 3vmin, 34px); }
       .block-wrap.header-wrap { padding-top: clamp(42px, 5.6vmin, 66px); }
       .content-wrap { flex: 0 1 auto; }
@@ -329,6 +310,7 @@
 
     @media (max-width: 480px) and (max-aspect-ratio: 1/1) {
       .container { border-radius: 16px; padding: 16px; gap: 12px; }
+      .event-nav { margin-top: 35px; }
       .block-wrap { padding-top: 20px; }
       .block-wrap.header-wrap { padding-top: 42px; }
       .logo-img { height: clamp(40px, 9vmin, 70px); max-width: 70%; }
@@ -347,60 +329,272 @@
       .event-btn::after { display: none; }
       .block-label--tag { animation: none; }
     }
+
+    /* ========================================= */
+    /* ========== MENU LIQUID GLASS ============ */
+    /* ========================================= */
+    .ff-menu-wrapper {
+      position: fixed;
+      top: max(20px, env(safe-area-inset-top));
+      left: max(20px, env(safe-area-inset-left)); 
+      z-index: 9999;
+      font-family: "GFF-Latin-Bold", sans-serif;
+    }
+
+    /* Nút Hamburger */
+    .ff-menu-btn {
+      position: relative;
+      z-index: 2;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      -webkit-backdrop-filter: blur(12px) saturate(150%);
+      backdrop-filter: blur(12px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+      transition: transform 0.2s ease, background 0.2s ease;
+      outline: none;
+      box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.15), 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .ff-menu-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .ff-menu-btn:active {
+      transform: scale(0.92);
+    }
+    .ff-menu-btn span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 2px;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Bảng Menu */
+    .ff-menu-panel {
+      position: absolute;
+      top: 0;
+      left: 0; 
+      z-index: 1;
+      width: 280px; 
+      background: rgba(15, 20, 35, 0.45);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-20px); 
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1), visibility 0.3s;
+      box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ff-menu-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.15) 0%, transparent 60%),
+                  radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .ff-menu-wrapper.active .ff-menu-panel {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    .panel-header {
+      height: 40px; 
+      display: flex;
+      align-items: center;
+      justify-content: flex-end; 
+      padding-right: 15px;
+      flex-shrink: 0;
+    }
+
+    .ff-close-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 20px;
+      font-family: Arial, sans-serif;
+      cursor: pointer;
+      transition: transform 0.2s, color 0.2s;
+      outline: none;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    }
+    .ff-close-btn:hover {
+      transform: scale(1.2);
+      color: #fff;
+    }
+
+    /* --- CẤU TRÚC MỤC MENU --- */
+    .ff-menu-content {
+      padding: 0 15px 20px 15px;
+    }
+
+    .ff-menu-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 15px;
+    }
+
+    .ff-menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .ff-menu-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Trạng thái Đang hoạt động (Active) */
+    .ff-menu-item.active {
+      background: linear-gradient(90deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: inset 3px 0 0 #fff, inset 0 0 10px rgba(255,255,255,0.1);
+    }
+
+    .ff-menu-item .menu-text {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.8);
+      letter-spacing: 1.5px;
+      font-weight: 700;
+    }
+
+    .ff-menu-item.active .menu-text {
+      color: #fff;
+      text-shadow: 0 0 8px rgba(255,255,255,0.5);
+    }
+
+    /* Hiệu ứng ẩn hiện trang */
+    .page-section {
+      display: none;
+    }
+    .page-section.active {
+      display: flex;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
 
-    <!-- CỤM NÚT SỰ KIỆN -->
-    <nav class="event-nav" aria-label="Danh sách sự kiện">
-      <button type="button" class="event-btn active" data-event="1">
-        <span>Sự kiện 1</span>
-      </button>
-      <button type="button" class="event-btn" data-event="2">
-        <span>Sự kiện 2</span>
-      </button>
-      <button type="button" class="event-btn" data-event="3">
-        <span>Sự kiện 3</span>
-      </button>
-    </nav>
-
-    <!-- KHỐI 1: TITLE -->
-    <div class="block-wrap header-wrap">
-      <header class="header glass-panel">
-        <img src="https://azerst-image-vn.vercel.app/images/8F9d2wz2w.png" alt="Logo GFF" class="logo-img" loading="lazy">
-      </header>
-      <div class="block-labels">
-        <div class="block-label block-label--tag" data-tag>MÀN TRÌNH DIỄN KINH DỊ</div>
-        <div class="block-label">TITLE SỰ KIỆN</div>
+  <!-- ================= MENU LIQUID GLASS ================= -->
+  <div class="ff-menu-wrapper" id="ffMenuWrapper">
+    
+    <div class="ff-menu-panel" id="ffMenuPanel">
+      <div class="panel-header">
+        <button class="ff-close-btn" id="ffMenuClose" aria-label="Đóng menu">✕</button>
+      </div>
+      
+      <!-- Nội dung Menu -->
+      <div class="ff-menu-content">
+        <ul class="ff-menu-list">
+          <!-- Mục 1: ASSETS (Đang hoạt động) -->
+          <li class="ff-menu-item active" data-target="page-assets">
+            <span class="menu-text">ASSETS</span>
+          </li>
+          
+          <!-- Mục 2: BANNER -->
+          <li class="ff-menu-item" data-target="page-banner">
+            <span class="menu-text">BANNER</span>
+          </li>
+        </ul>
       </div>
     </div>
 
-    <!-- KHỐI 2: TAB -->
-    <div class="block-wrap tab-wrap">
-      <div class="tab-section glass-panel">
-        <div class="tab-wrapper">
-          <img src="https://azerst-image-vn.vercel.app/images/wRZwa1Bqv.png" alt="Tab điều hướng" class="tab-image" loading="lazy">
+    <button class="ff-menu-btn" id="ffMenuBtn" aria-label="Mở menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+  <!-- ============================================ -->
+
+  <!-- ================= KHU VỰC CHỨA CÁC TRANG ================= -->
+  
+  <!-- TRANG 1: ASSETS (Chứa toàn bộ nội dung sự kiện 1,2,3) -->
+  <div class="page-wrapper page-section active" id="page-assets">
+    <div class="container">
+      <!-- CỤM NÚT SỰ KIỆN -->
+      <nav class="event-nav" aria-label="Danh sách sự kiện">
+        <button type="button" class="event-btn active" data-event="1">
+          <span>Sự kiện 1</span>
+        </button>
+        <button type="button" class="event-btn" data-event="2">
+          <span>Sự kiện 2</span>
+        </button>
+        <button type="button" class="event-btn" data-event="3">
+          <span>Sự kiện 3</span>
+        </button>
+      </nav>
+
+      <!-- KHỐI 1: TITLE -->
+      <div class="block-wrap header-wrap">
+        <header class="header glass-panel">
+          <img src="https://azerst-image-vn.vercel.app/images/8F9d2wz2w.png" alt="Logo GFF" class="logo-img" loading="lazy">
+        </header>
+        <div class="block-labels">
+          <div class="block-label block-label--tag" data-tag>MÀN TRÌNH DIỄN KINH DỊ</div>
+          <div class="block-label">TITLE SỰ KIỆN</div>
         </div>
       </div>
-      <div class="block-label">TAB SỰ KIỆN</div>
+
+      <!-- KHỐI 2: TAB -->
+      <div class="block-wrap tab-wrap">
+        <div class="tab-section glass-panel">
+          <div class="tab-wrapper">
+            <img src="https://azerst-image-vn.vercel.app/images/wRZwa1Bqv.png" alt="Tab điều hướng" class="tab-image" loading="lazy">
+          </div>
+        </div>
+        <div class="block-label">TAB SỰ KIỆN</div>
+      </div>
+
+      <!-- KHỐI 3: BACKGROUND -->
+      <div class="block-wrap content-wrap">
+        <main class="content glass-panel">
+          <div class="text-image-box"></div>
+        </main>
+        <div class="block-label">BACKGROUND SỰ KIỆN</div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="footer-note">© Azerst 2026 – All rights reserved</div>
     </div>
-
-    <!-- KHỐI 3: BACKGROUND -->
-    <div class="block-wrap content-wrap">
-      <main class="content glass-panel">
-        <div class="text-image-box"></div>
-      </main>
-      <div class="block-label">BACKGROUND SỰ KIỆN</div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer-note">© Azerst 2026 – All rights reserved</div>
-
   </div>
 
+  <!-- TRANG 2: BANNER (Trang trống chờ phát triển) -->
+  <div class="page-wrapper page-section" id="page-banner">
+    <div class="container" style="justify-content: center; align-items: center; height: 50vh; min-height: 300px;">
+      <h1 style="color: #fff; text-transform: uppercase; letter-spacing: 2px;">Trang Banner</h1>
+      <p style="color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 10px;">(Nội dung đang được phát triển...)</p>
+    </div>
+  </div>
+  <!-- ========================================================= -->
+
   <script>
-    // ===== CẤU HÌNH ẢNH + TAG TEXT THEO TỪNG SỰ KIỆN =====
+    // ===== LOGIC CHUYỂN TAB SỰ KIỆN =====
     const EVENT_IMAGES = {
       "1": {
         tag:  "MÀN TRÌNH DIỄN KINH DỊ",
@@ -427,29 +621,77 @@
     const bgEl   = document.querySelector('.text-image-box');
     const tagEl  = document.querySelector('[data-tag]');
 
-    // Preload ảnh
     Object.values(EVENT_IMAGES).forEach(set => {
       ['logo', 'tab', 'bg'].forEach(k => {
         if (set[k]) { const img = new Image(); img.src = set[k]; }
       });
     });
 
-    // Chuyển tab
     document.querySelectorAll('.event-btn').forEach(btn => {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
-
         document.querySelectorAll('.event-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
-
         const key = this.dataset.event;
         const set = EVENT_IMAGES[key];
-        if (!set) { console.warn('[Event] Không có dữ liệu cho key:', key); return; }
-
+        if (!set) return;
         if (logoEl && set.logo) logoEl.src = set.logo;
         if (tabEl  && set.tab)  tabEl.src  = set.tab;
         if (bgEl   && set.bg)   bgEl.style.backgroundImage = `url('${set.bg}')`;
         if (tagEl  && set.tag)  tagEl.textContent = set.tag;
+      });
+    });
+
+    // ===== LOGIC ĐÓNG MỞ MENU =====
+    const ffMenuWrapper = document.getElementById('ffMenuWrapper');
+    const ffMenuBtn = document.getElementById('ffMenuBtn');
+    const ffMenuClose = document.getElementById('ffMenuClose');
+
+    ffMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      ffMenuWrapper.classList.toggle('active');
+    });
+
+    ffMenuClose.addEventListener('click', () => {
+      ffMenuWrapper.classList.remove('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (ffMenuWrapper.classList.contains('active') && !ffMenuWrapper.contains(e.target)) {
+        ffMenuWrapper.classList.remove('active');
+      }
+    });
+
+    // ===== LOGIC CHUYỂN TRANG (ASSETS <-> BANNER) =====
+    const menuItems = document.querySelectorAll('.ff-menu-item');
+    const pageSections = document.querySelectorAll('.page-section');
+
+    menuItems.forEach(item => {
+      item.addEventListener('click', function() {
+        // 1. Cập nhật giao diện menu (Active)
+        menuItems.forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+        
+        // 2. Lấy ID trang cần hiển thị
+        const targetId = this.dataset.target;
+
+        // 3. Ẩn tất cả các trang
+        pageSections.forEach(page => {
+          page.classList.remove('active');
+          // Reset lại animation (nếu cần) để hiệu ứng fadeUp chạy lại
+          page.style.animation = 'none';
+          page.offsetHeight; /* Trigger reflow */
+          page.style.animation = null; 
+        });
+
+        // 4. Hiện trang được chọn
+        const targetPage = document.getElementById(targetId);
+        if (targetPage) {
+          targetPage.classList.add('active');
+        }
+
+        // 5. Tự động đóng menu sau khi chọn
+        ffMenuWrapper.classList.remove('active');
       });
     });
   </script>
