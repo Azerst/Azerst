@@ -5,23 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>TAB SỰ KIỆN | Trang chủ</title>
   <style>
-    /* ===== FONT GFF ===== */
     @font-face {
       font-family: "GFF-Latin-Bold";
       src: url("https://dl.dir.freefiremobile.com/common/web_event/common/fonts/website/GFFLatinW05-Bold.woff2") format("woff2"),
            url("https://dl.dir.freefiremobile.com/common/web_event/common/fonts/website/GFFLatinW05-Bold.woff") format("woff");
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
+      font-weight: 700; font-style: normal; font-display: swap;
     }
 
-    /* ===== RESET & BASE ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html {
-      -webkit-text-size-adjust: 100%;
-      -webkit-tap-highlight-color: transparent;
-    }
+    html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
     html, body { width: 100%; min-height: 100%; }
 
     body {
@@ -29,12 +21,9 @@
       --pb: max(clamp(6px, 1.5vmin, 24px), env(safe-area-inset-bottom));
       --pl: max(clamp(6px, 1.5vmin, 24px), env(safe-area-inset-left));
       --pr: max(clamp(6px, 1.5vmin, 24px), env(safe-area-inset-right));
-
       font-family: "GFF-Latin-Bold", system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      background-color: #0a0f1e;
-      color: #fff;
-      min-height: 100vh;
-      min-height: 100dvh;
+      background-color: #0a0f1e; color: #fff;
+      min-height: 100vh; min-height: 100dvh;
       display: flex;
       padding: var(--pt) var(--pr) var(--pb) var(--pl);
       overflow-x: hidden;
@@ -42,44 +31,28 @@
 
     body::before {
       content: "";
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background-image:
         radial-gradient(circle at 20% 30%, rgba(10, 20, 40, 0.45) 0%, rgba(0, 0, 0, 0.75) 100%),
         url('https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/img/20228/b2b0012af7e3bfcdc90cd8744065e8ab.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      z-index: -1;
-      pointer-events: none;
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      z-index: -1; pointer-events: none;
     }
 
-    /* ===== KHUNG CHÍNH ===== */
     .container {
       margin: auto;
-
-      width: min(
-        100%,
-        calc((100dvh - var(--pt) - var(--pb)) * 16 / 9),
-        1600px
-      );
+      width: min(100%, calc((100dvh - var(--pt) - var(--pb)) * 16 / 9), 1600px);
       aspect-ratio: 16 / 9;
-
-      background: rgba(10, 15, 30, 0.55);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      backdrop-filter: blur(16px) saturate(180%);
+      background: rgba(10, 15, 30, 0.3);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
       border-radius: clamp(16px, 2.5vmin, 48px);
       padding: clamp(14px, 2.5vmin, 40px) clamp(16px, 3vmin, 60px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow:
-        0 30px 50px rgba(0, 0, 0, 0.6),
-        0 0 0 1px rgba(255, 215, 0, 0.15) inset,
-        0 0 40px rgba(255, 215, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      gap: clamp(6px, 1.2vmin, 16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: space-between;
+      gap: clamp(20px, 4vmin, 56px);
       animation: fadeUp 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
       overflow: hidden;
     }
@@ -89,519 +62,300 @@
       to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* ============================================================
-       SIZING THEO THIẾT BỊ
-       ============================================================ */
     @media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 16/10) {
-      .container {
-        width: min(
-          100%,
-          calc((100dvh - var(--pt) - var(--pb)) * 4 / 3),
-          1400px
-        );
-        aspect-ratio: 4 / 3;
-      }
+      .container { width: min(100%, calc((100dvh - var(--pt) - var(--pb)) * 4 / 3), 1400px); aspect-ratio: 4 / 3; }
     }
-
     @media (max-height: 560px) and (orientation: landscape) {
-      .container {
-        aspect-ratio: auto;
-        width: min(100%, 1600px);
-        height: calc(100dvh - var(--pt) - var(--pb));
-        max-height: none;
-      }
+      .container { aspect-ratio: auto; width: min(100%, 1600px); height: calc(100dvh - var(--pt) - var(--pb)); max-height: none; }
     }
-
     @media (max-aspect-ratio: 1/1) {
-      .container {
-        aspect-ratio: auto;
-        width: min(100%, 720px);
-        height: auto;
-        max-height: none;
-      }
+      .container { aspect-ratio: auto; width: min(100%, 720px); height: auto; max-height: none; }
     }
-
     @media (min-width: 700px) and (max-aspect-ratio: 1/1) {
-      .container {
-        width: min(100%, 960px);
-      }
+      .container { width: min(100%, 960px); }
     }
-
     @media (min-width: 2000px) and (min-aspect-ratio: 16/10) {
-      .container {
-        max-width: 1800px;
-      }
+      .container { max-width: 1800px; }
     }
 
-    /* ===== HEADER ===== */
-    .header {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: clamp(4px, 0.8vmin, 10px);
-      flex-shrink: 0;
+    .block-wrap {
+      position: relative; width: 100%;
+      display: flex; flex-direction: column;
+      padding-top: clamp(22px, 3.2vmin, 48px);
+    }
+    .header-wrap, .tab-wrap { flex-shrink: 0; }
+    .content-wrap { flex: 1; min-height: 0; }
+    .content-wrap > .content { flex: 1; min-height: 0; }
+
+    /* ============================================================
+       LABEL – CHỮ LOANG VÀNG TRẮNG CAM (1 LỚP, NHẸ GPU)
+       ============================================================ */
+    .block-label {
+      position: absolute; top: 0; left: 0;
+      text-align: left;
+      padding-left: clamp(6px, 1vmin, 18px);
+      z-index: 5;
+      font-family: "GFF-Latin-Bold", sans-serif;
+      font-size: clamp(0.78rem, 2.4vmin, 2rem);
+      letter-spacing: clamp(2px, 1vmin, 9px);
+      text-transform: uppercase;
+      line-height: 1; white-space: nowrap;
+
+      /* 1 gradient duy nhất, size 250%, animate vị trí → màu loang từ 4 phía */
+      background-image: radial-gradient(
+        circle at center,
+        #ffffff 0%,
+        #fff6c9 16%,
+        #ffd966 34%,
+        #ffb347 54%,
+        #ffd966 72%,
+        #fff6c9 88%,
+        #ffffff 100%
+      );
+      background-size: 250% 250%;
+      background-repeat: no-repeat;
+      background-position: 15% 15%;
+
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+
+      filter:
+        drop-shadow(0 3px 10px rgba(255, 170, 0, 0.55))
+        drop-shadow(0 2px 3px rgba(0, 0, 0, 0.85));
+      pointer-events: none;
+
+      /* will-change báo browser tối ưu lớp này, tránh ảnh hưởng phần khác */
+      will-change: background-position;
+      animation: labelBloom 7s ease-in-out infinite;
+    }
+
+    .header-wrap   .block-label { animation-duration: 6s;   animation-delay: 0s;    }
+    .tab-wrap      .block-label { animation-duration: 7.5s; animation-delay: -2s;   }
+    .content-wrap  .block-label { animation-duration: 6.8s; animation-delay: -4.5s; }
+
+    @keyframes labelBloom {
+      0%   { background-position: 15% 15%; }
+      25%  { background-position: 85% 15%; }
+      50%  { background-position: 85% 85%; }
+      75%  { background-position: 15% 85%; }
+      100% { background-position: 15% 15%; }
     }
 
     /* ============================================================
-       NÚT SỰ KIỆN - LIQUID GLASS (VÁT GÓC TRONG SUỐT)
+       GLASS PANEL
+       ============================================================ */
+    .glass-panel {
+      position: relative;
+      --cut: clamp(12px, 2.5vmin, 22px);
+      --border-w: 1.5px;
+      width: 100%;
+      padding: clamp(12px, 2.5vmin, 24px) !important;
+      background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.15) 25%,
+        rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.15) 75%,
+        rgba(255, 255, 255, 0.6) 100%);
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)),
+        calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+      border: none !important; box-shadow: none !important; border-radius: 0 !important;
+    }
+    .glass-panel::before {
+      content: "";
+      position: absolute; inset: var(--border-w); z-index: -1;
+      background:
+        radial-gradient(ellipse 120% 60% at 50% -10%, rgba(180, 210, 255, 0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 100% 60% at 50% 110%, rgba(255, 200, 100, 0.08) 0%, transparent 60%),
+        linear-gradient(180deg, rgba(15, 22, 40, 0.35) 0%, rgba(5, 10, 20, 0.55) 100%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%) brightness(1.06);
+      backdrop-filter: blur(22px) saturate(180%) brightness(1.06);
+      clip-path: polygon(
+        calc(var(--cut) - var(--border-w) * 2) 0, 100% 0,
+        100% calc(100% - var(--cut) + var(--border-w) * 2),
+        calc(100% - var(--cut) + var(--border-w) * 2) 100%, 0 100%,
+        0 calc(var(--cut) - var(--border-w) * 2));
+    }
+
+    /* ============================================================
+       NAV NÚT – ĐẢM BẢO LUÔN CLICK ĐƯỢC (Z-INDEX CAO)
        ============================================================ */
     .event-nav {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: relative;
+      z-index: 100;               /* ✅ luôn nằm trên mọi thứ */
+      display: flex; align-items: center; justify-content: center;
       gap: clamp(6px, 1.2vmin, 14px);
-      width: 100%;
-      flex-wrap: wrap;
-      margin-bottom: clamp(2px, 0.6vmin, 8px);
+      width: 100%; flex-wrap: wrap; flex-shrink: 0;
     }
 
     .event-btn {
-      --cut: 14px;            /* Độ lớn góc vát */
-      --border-w: 1.5px;      /* Độ dày viền kính */
-
+      --cut: 14px; --border-w: 1.5px;
       position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
+      display: inline-flex; align-items: center; justify-content: center;
       font-family: "GFF-Latin-Bold", sans-serif;
       font-size: clamp(0.72rem, 1.85vmin, 1.2rem);
       letter-spacing: clamp(1px, 0.4vmin, 2px);
-      text-transform: uppercase;
-      color: #fff;
-      text-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.7),
-        0 0 12px rgba(255, 255, 255, 0.2);
-
+      text-transform: uppercase; color: #fff;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7), 0 0 12px rgba(255, 255, 255, 0.2);
       padding: clamp(10px, 1.6vmin, 18px) clamp(22px, 3.2vmin, 46px);
-      cursor: pointer;
-      white-space: nowrap;
-      -webkit-tap-highlight-color: transparent;
-      border: none;
-      outline: none;
-
-      /* Lớp ngoài cùng: viền kính phát sáng */
-      background: linear-gradient(135deg,
-        rgba(255, 255, 255, 0.75) 0%,
-        rgba(255, 255, 255, 0.25) 25%,
-        rgba(255, 255, 255, 0.15) 50%,
-        rgba(255, 255, 255, 0.25) 75%,
-        rgba(255, 255, 255, 0.7) 100%
-      );
-
-      clip-path: polygon(
-        var(--cut) 0,
-        100% 0,
-        100% calc(100% - var(--cut)),
-        calc(100% - var(--cut)) 100%,
-        0 100%,
-        0 var(--cut)
-      );
-
+      cursor: pointer; white-space: nowrap;
+      border: none; outline: none;
+      pointer-events: auto;       /* ✅ luôn nhận click */
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.25) 25%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.25) 75%, rgba(255, 255, 255, 0.7) 100%);
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
       isolation: isolate;
-
-      transition:
-        transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1),
-        filter 0.35s ease,
-        color 0.35s ease,
-        text-shadow 0.35s ease,
-        background 0.35s ease;
-
+      transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1), filter 0.35s ease, color 0.35s ease, text-shadow 0.35s ease, background 0.35s ease;
       filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
     }
-
-    /* ===== THÂN KÍNH (LỚP TRONG) ===== */
     .event-btn::before {
       content: "";
-      position: absolute;
-      inset: var(--border-w);
-      z-index: 1;
-
-      background:
-        /* Vệt sáng phía trên (highlight) */
-        radial-gradient(ellipse 130% 70% at 50% -25%,
-          rgba(255, 255, 255, 0.5) 0%,
-          rgba(255, 255, 255, 0.08) 45%,
-          transparent 70%),
-        /* Vệt phản chiếu phía dưới */
-        radial-gradient(ellipse 100% 60% at 50% 130%,
-          rgba(255, 255, 255, 0.2) 0%,
-          transparent 60%),
-        /* Nền kính chính */
-        linear-gradient(135deg,
-          rgba(255, 255, 255, 0.12) 0%,
-          rgba(255, 255, 255, 0.02) 50%,
-          rgba(255, 255, 255, 0.08) 100%
-        );
-
+      position: absolute; inset: var(--border-w); z-index: 1;
+      background: radial-gradient(ellipse 130% 70% at 50% -25%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.08) 45%, transparent 70%),
+        radial-gradient(ellipse 100% 60% at 50% 130%, rgba(255, 255, 255, 0.2) 0%, transparent 60%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.08) 100%);
       -webkit-backdrop-filter: blur(14px) saturate(180%) brightness(1.05);
       backdrop-filter: blur(14px) saturate(180%) brightness(1.05);
-
-      clip-path: polygon(
-        calc(var(--cut) - var(--border-w) * 2) 0,
-        100% 0,
-        100% calc(100% - var(--cut) + var(--border-w) * 2),
-        calc(100% - var(--cut) + var(--border-w) * 2) 100%,
-        0 100%,
-        0 calc(var(--cut) - var(--border-w) * 2)
-      );
+      clip-path: polygon(calc(var(--cut) - var(--border-w) * 2) 0, 100% 0, 100% calc(100% - var(--cut) + var(--border-w) * 2), calc(100% - var(--cut) + var(--border-w) * 2) 100%, 0 100%, 0 calc(var(--cut) - var(--border-w) * 2));
     }
-
-    /* ===== VỆT SÁNG LƯỚT QUA (SHEEN) ===== */
     .event-btn::after {
       content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 2;
+      position: absolute; inset: 0; z-index: 2;
       pointer-events: none;
-
-      background: linear-gradient(105deg,
-        transparent 30%,
-        rgba(255, 255, 255, 0.3) 48%,
-        rgba(255, 255, 255, 0.5) 50%,
-        rgba(255, 255, 255, 0.3) 52%,
-        transparent 70%
-      );
-
+      background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.3) 48%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.3) 52%, transparent 70%);
       transform: translateX(-120%);
       transition: transform 0.9s cubic-bezier(0.3, 0.8, 0.3, 1);
-
-      clip-path: polygon(
-        var(--cut) 0,
-        100% 0,
-        100% calc(100% - var(--cut)),
-        calc(100% - var(--cut)) 100%,
-        0 100%,
-        0 var(--cut)
-      );
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
     }
-
-    .event-btn:hover::after {
-      transform: translateX(120%);
-    }
-
-    /* Text trên cùng */
-    .event-btn span {
-      position: relative;
-      z-index: 3;
-    }
-
-    /* ---------- HOVER ---------- */
+    .event-btn:hover::after { transform: translateX(120%); }
+    .event-btn span { position: relative; z-index: 3; }
     .event-btn:hover {
       transform: translateY(-2px);
-      filter:
-        drop-shadow(0 6px 20px rgba(0, 0, 0, 0.5))
-        drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
-      text-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.7),
-        0 0 16px rgba(255, 255, 255, 0.45);
+      filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7), 0 0 16px rgba(255, 255, 255, 0.45);
     }
-
     .event-btn:hover::before {
-      background:
-        radial-gradient(ellipse 130% 70% at 50% -25%,
-          rgba(255, 255, 255, 0.65) 0%,
-          rgba(255, 255, 255, 0.15) 45%,
-          transparent 70%),
-        radial-gradient(ellipse 100% 60% at 50% 130%,
-          rgba(255, 255, 255, 0.3) 0%,
-          transparent 60%),
-        linear-gradient(135deg,
-          rgba(255, 255, 255, 0.2) 0%,
-          rgba(255, 255, 255, 0.04) 50%,
-          rgba(255, 255, 255, 0.15) 100%
-        );
+      background: radial-gradient(ellipse 130% 70% at 50% -25%, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.15) 45%, transparent 70%),
+        radial-gradient(ellipse 100% 60% at 50% 130%, rgba(255, 255, 255, 0.3) 0%, transparent 60%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(255, 255, 255, 0.15) 100%);
     }
-
-    /* ---------- ACTIVE (ĐANG CHỌN - KÍNH VÀNG) ---------- */
     .event-btn.active {
-      background: linear-gradient(135deg,
-        rgba(255, 235, 160, 0.9) 0%,
-        rgba(255, 200, 60, 0.45) 25%,
-        rgba(255, 200, 60, 0.3) 50%,
-        rgba(255, 200, 60, 0.45) 75%,
-        rgba(255, 235, 160, 0.85) 100%
-      );
-
+      background: linear-gradient(135deg, rgba(255, 235, 160, 0.9) 0%, rgba(255, 200, 60, 0.45) 25%, rgba(255, 200, 60, 0.3) 50%, rgba(255, 200, 60, 0.45) 75%, rgba(255, 235, 160, 0.85) 100%);
       color: #fff8e0;
-      text-shadow:
-        0 1px 4px rgba(120, 60, 0, 0.7),
-        0 0 16px rgba(255, 215, 0, 0.7);
-
-      filter:
-        drop-shadow(0 4px 16px rgba(255, 180, 20, 0.5))
-        drop-shadow(0 0 6px rgba(255, 235, 150, 0.4));
+      text-shadow: 0 1px 4px rgba(120, 60, 0, 0.7), 0 0 16px rgba(255, 215, 0, 0.7);
+      filter: drop-shadow(0 4px 16px rgba(255, 180, 20, 0.5)) drop-shadow(0 0 6px rgba(255, 235, 150, 0.4));
     }
-
     .event-btn.active::before {
-      background:
-        radial-gradient(ellipse 130% 70% at 50% -25%,
-          rgba(255, 250, 210, 0.7) 0%,
-          rgba(255, 220, 100, 0.15) 45%,
-          transparent 70%),
-        radial-gradient(ellipse 100% 60% at 50% 130%,
-          rgba(255, 220, 100, 0.35) 0%,
-          transparent 60%),
-        linear-gradient(135deg,
-          rgba(255, 220, 100, 0.35) 0%,
-          rgba(255, 200, 60, 0.15) 50%,
-          rgba(255, 220, 100, 0.3) 100%
-        );
-
-      -webkit-backdrop-filter: blur(14px) saturate(200%) brightness(1.15);
-      backdrop-filter: blur(14px) saturate(200%) brightness(1.15);
+      background: radial-gradient(ellipse 130% 70% at 50% -25%, rgba(255, 250, 210, 0.7) 0%, rgba(255, 220, 100, 0.15) 45%, transparent 70%),
+        radial-gradient(ellipse 100% 60% at 50% 130%, rgba(255, 220, 100, 0.35) 0%, transparent 60%),
+        linear-gradient(135deg, rgba(255, 220, 100, 0.35) 0%, rgba(255, 200, 60, 0.15) 50%, rgba(255, 220, 100, 0.3) 100%);
     }
+    .event-btn:active { transform: translateY(0) scale(0.97); }
 
-    /* ---------- PRESSED ---------- */
-    .event-btn:active {
-      transform: translateY(0) scale(0.97);
-    }
-
-    /* ---------- RESPONSIVE ---------- */
     @media (max-width: 480px) {
-      .event-btn {
-        --cut: 10px;
-        --border-w: 1.25px;
-        padding: 8px 16px;
-        font-size: clamp(0.62rem, 2.6vmin, 0.85rem);
-      }
+      .event-btn { --cut: 10px; --border-w: 1.25px; padding: 8px 16px; font-size: clamp(0.62rem, 2.6vmin, 0.85rem); }
     }
 
-    /* ===== TOP LABEL ===== */
-    .top-label {
-      font-family: "GFF-Latin-Bold", sans-serif;
-      font-size: clamp(0.9rem, 3.4vmin, 2.6rem);
-      letter-spacing: clamp(3px, 1.6vmin, 14px);
-      text-transform: uppercase;
-      background: linear-gradient(135deg, #ffffff 0%, #ffe28a 40%, #ffb347 80%, #ffd966 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 4px 14px rgba(255, 180, 0, 0.45));
-      white-space: nowrap;
-      line-height: 1.1;
-    }
-
-    .logo-img {
-      height: clamp(48px, 9vmin, 120px);
-      width: auto;
-      max-width: 60%;
-      object-fit: contain;
-      flex-shrink: 0;
-      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.7)) brightness(1.05);
-      transition: transform 0.3s ease;
-    }
+    .header { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: clamp(4px, 0.8vmin, 10px); flex-shrink: 0; }
+    .logo-img { height: clamp(48px, 9vmin, 120px); width: auto; max-width: 60%; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.7)) brightness(1.05); transition: transform 0.3s ease; }
     .logo-img:hover { transform: scale(1.03); }
 
-    /* ===== TAB SECTION ===== */
-    .tab-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(4px, 0.8vmin, 12px);
-      width: 100%;
-      flex-shrink: 0;
-    }
+    .tab-section { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(4px, 0.8vmin, 12px); width: 100%; flex-shrink: 0; }
+    .tab-wrapper { display: flex; justify-content: center; align-items: center; width: 100%; }
+    .tab-image { max-width: 100%; height: auto; max-height: clamp(60px, 12vmin, 160px); object-fit: contain; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.5)); transition: transform 0.25s ease, filter 0.25s ease; }
+    .tab-image:hover { transform: translateY(-3px) scale(1.02); filter: drop-shadow(0 14px 26px rgba(255, 215, 0, 0.35)); }
 
-    .tab-title {
-      font-family: "GFF-Latin-Bold", sans-serif;
-      font-size: clamp(0.95rem, 3.4vmin, 2.8rem);
-      letter-spacing: clamp(2px, 1.2vmin, 8px);
-      text-transform: uppercase;
-      background: linear-gradient(135deg, #ffffff 0%, #ffe28a 40%, #ffb347 80%, #ffd966 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 4px 14px rgba(255, 180, 0, 0.35));
-      line-height: 1.1;
-      text-align: center;
-      white-space: nowrap;
-    }
-
-    .tab-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-    }
-
-    .tab-image {
-      max-width: 100%;
-      height: auto;
-      max-height: clamp(60px, 12vmin, 160px);
-      object-fit: contain;
-      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.5));
-      transition: transform 0.25s ease, filter 0.25s ease;
-    }
-    .tab-image:hover {
-      transform: translateY(-3px) scale(1.02);
-      filter: drop-shadow(0 14px 26px rgba(255, 215, 0, 0.35));
-    }
-
-    /* ===== CONTENT ===== */
-    .content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: clamp(6px, 1.6vmin, 24px);
-      width: 100%;
-      flex: 1;
-      min-height: 0;
-    }
-
-    .content h2 {
-      font-family: "GFF-Latin-Bold", sans-serif;
-      font-size: clamp(0.95rem, 3vmin, 2.6rem);
-      letter-spacing: clamp(3px, 1.6vmin, 14px);
-      text-transform: uppercase;
-      background: linear-gradient(135deg, #ffffff 0%, #ffe28a 40%, #ffb347 80%, #ffd966 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 4px 14px rgba(255, 180, 0, 0.45));
-      line-height: 1.15;
-      max-width: 92%;
-      flex-shrink: 0;
-    }
+    .content { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: clamp(6px, 1.6vmin, 24px); width: 100%; flex: 1; min-height: 0; }
 
     .text-image-box {
-      width: 100%;
-      max-width: min(92%, 980px);
-      flex: 1 1 auto;
-      min-height: 100px;
-      max-height: 100%;
+      width: 100%; max-width: min(100%, 980px);
+      flex: 1 1 auto; min-height: 100px; max-height: 100%;
       border-radius: clamp(12px, 1.8vmin, 28px);
+      background-color: #0f1730;   /* nền dự phòng khi chưa có ảnh */
       background-image: url('https://azerst-image-vn.vercel.app/images/orGmr7jOS.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center;
       padding: clamp(12px, 3vmin, 44px) clamp(16px, 3vmin, 50px);
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
       border: 1px solid rgba(255, 215, 0, 0.25);
-      box-shadow:
-        0 20px 40px -10px rgba(0, 0, 0, 0.7),
-        0 0 0 1px rgba(255, 255, 255, 0.08) inset;
-      isolation: isolate;
-      margin: 0 auto;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+      isolation: isolate; margin: 0 auto;
       transition: background-image 0.35s ease;
     }
-
     .text-image-box::before {
       content: "";
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: linear-gradient(180deg, rgba(5, 10, 25, 0.55) 0%, rgba(0, 0, 0, 0.7) 100%);
       z-index: -1;
     }
 
-    /* ===== FOOTER ===== */
-    .footer-note {
-      font-size: clamp(0.5rem, 1vmin, 0.95rem);
-      color: rgba(255, 255, 255, 0.45);
-      letter-spacing: clamp(1px, 0.25vmin, 3px);
-      text-transform: uppercase;
-      font-family: "GFF-Latin-Bold", sans-serif;
-      flex-shrink: 0;
-      text-align: center;
-      white-space: nowrap;
-    }
+    .footer-note { font-size: clamp(0.5rem, 1vmin, 0.95rem); color: rgba(255, 255, 255, 0.45); letter-spacing: clamp(1px, 0.25vmin, 3px); text-transform: uppercase; font-family: "GFF-Latin-Bold", sans-serif; flex-shrink: 0; text-align: center; white-space: nowrap; }
 
-    /* ===== TINH CHỈNH NHỎ CHO PORTRAIT ===== */
     @media (max-aspect-ratio: 1/1) {
-      .content {
-        flex: 0 1 auto;
-        gap: clamp(10px, 2vmin, 20px);
-      }
-      .text-image-box {
-        flex: 0 1 auto;
-        aspect-ratio: 16 / 9;
-        max-height: none;
-        min-height: 0;
-        width: 100%;
-      }
+      .container { gap: clamp(16px, 3vmin, 32px); }
+      .block-wrap { padding-top: clamp(20px, 3vmin, 34px); }
+      .content-wrap { flex: 0 1 auto; }
+      .content { flex: 0 1 auto; gap: clamp(10px, 2vmin, 20px); }
+      .text-image-box { flex: 0 1 auto; aspect-ratio: 16 / 9; max-height: none; min-height: 0; width: 100%; }
       .footer-note { white-space: normal; }
+      .glass-panel { padding: clamp(12px, 3vmin, 20px) !important; }
+      .block-label { font-size: clamp(0.72rem, 3vmin, 1.2rem); letter-spacing: clamp(1.5px, 0.8vmin, 5px); }
     }
-
     @media (max-width: 480px) and (max-aspect-ratio: 1/1) {
-      .container { border-radius: 16px; padding: 16px; gap: 12px; }
-      .top-label {
-        font-size: clamp(0.85rem, 3.8vmin, 1.3rem);
-        letter-spacing: clamp(3px, 1.5vmin, 6px);
-      }
+      .container { border-radius: 16px; padding: 16px; gap: 14px; }
+      .block-wrap { padding-top: 22px; }
       .logo-img { height: clamp(40px, 9vmin, 70px); max-width: 70%; }
-      .tab-title {
-        font-size: clamp(0.9rem, 4vmin, 1.4rem);
-        letter-spacing: clamp(2px, 1vmin, 4px);
-        white-space: normal;
-      }
       .tab-image { max-height: clamp(48px, 11vmin, 90px); }
-      .content h2 {
-        font-size: clamp(0.85rem, 3.6vmin, 1.3rem);
-        letter-spacing: clamp(2px, 1vmin, 5px);
-      }
       .text-image-box { aspect-ratio: 4 / 3; }
       .footer-note { font-size: 0.55rem; letter-spacing: 1px; }
+      .block-label { font-size: clamp(0.65rem, 3.4vmin, 1rem); letter-spacing: clamp(1px, 0.6vmin, 3px); padding-left: 4px; }
     }
 
-    /* ===== prefers-reduced-motion ===== */
     @media (prefers-reduced-motion: reduce) {
       .container { animation: none; }
       .tab-image, .logo-img, .event-btn { transition: none; }
       .tab-image:hover, .logo-img:hover, .event-btn:hover { transform: none; }
       .event-btn::after { display: none; }
+      .block-label { animation: none; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <header class="header">
-      <nav class="event-nav" aria-label="Danh sách sự kiện">
-        <button type="button" class="event-btn active">
-          <span>Sự kiện 1</span>
-        </button>
-        <button type="button" class="event-btn">
-          <span>Sự kiện 2</span>
-        </button>
-        <button type="button" class="event-btn">
-          <span>Sự kiện 3</span>
-        </button>
-      </nav>
 
-      <div class="top-label">TITLE SỰ KIỆN</div>
-      <img src="https://azerst-image-vn.vercel.app/images/8F9d2wz2w.png"
-           alt="Logo GFF" class="logo-img" loading="lazy">
-    </header>
+    <nav class="event-nav" aria-label="Danh sách sự kiện">
+      <button type="button" class="event-btn active"><span>Sự kiện 1</span></button>
+      <button type="button" class="event-btn"><span>Sự kiện 2</span></button>
+      <button type="button" class="event-btn"><span>Sự kiện 3</span></button>
+    </nav>
 
-    <div class="tab-section">
-      <div class="tab-title">TAB SỰ KIỆN</div>
-      <div class="tab-wrapper">
-        <img src="https://azerst-image-vn.vercel.app/images/wRZwa1Bqv.png"
-             alt="Tab điều hướng" class="tab-image" loading="lazy">
-      </div>
+    <div class="block-wrap header-wrap">
+      <header class="header glass-panel">
+        <img src="https://azerst-image-vn.vercel.app/images/8F9d2wz2w.png" alt="Logo GFF" class="logo-img" loading="lazy">
+      </header>
+      <div class="block-label">TITLE SỰ KIỆN</div>
     </div>
 
-    <main class="content">
-      <h2>BACKGROUND SỰ KIỆN</h2>
-      <div class="text-image-box"></div>
-    </main>
+    <div class="block-wrap tab-wrap">
+      <div class="tab-section glass-panel">
+        <div class="tab-wrapper">
+          <img src="https://azerst-image-vn.vercel.app/images/wRZwa1Bqv.png" alt="Tab điều hướng" class="tab-image" loading="lazy">
+        </div>
+      </div>
+      <div class="block-label">TAB SỰ KIỆN</div>
+    </div>
+
+    <div class="block-wrap content-wrap">
+      <main class="content glass-panel">
+        <div class="text-image-box"></div>
+      </main>
+      <div class="block-label">BACKGROUND SỰ KIỆN</div>
+    </div>
 
     <div class="footer-note">© Azerst 2026 – All rights reserved</div>
+
   </div>
 
   <script>
-    // Bộ ảnh theo từng sự kiện
     const EVENT_IMAGES = {
       1: {
         logo: 'https://azerst-image-vn.vercel.app/images/8F9d2wz2w.png',
@@ -624,7 +378,25 @@
     const tabEl  = document.querySelector('.tab-image');
     const bgEl   = document.querySelector('.text-image-box');
 
-    // Xử lý chuyển tab sự kiện + đổi ảnh tương ứng
+    // ✅ Preload toàn bộ ảnh trước để tránh "mất background" khi ảnh chưa kịp tải
+    const preloaded = {};
+    Object.values(EVENT_IMAGES).forEach(set => {
+      ['logo', 'tab', 'bg'].forEach(key => {
+        const img = new Image();
+        img.src = set[key];
+        preloaded[set[key]] = img;
+      });
+    });
+
+    // ✅ Chỉ set background khi ảnh load thành công; lỗi thì GIỮ NGUYÊN nền cũ
+    function safeSetBg(url) {
+      if (!url) return;
+      const test = new Image();
+      test.onload  = () => { bgEl.style.backgroundImage = `url('${url}')`; };
+      test.onerror = () => { console.warn('[EVENT] Background ảnh lỗi, giữ nền cũ:', url); };
+      test.src = url;
+    }
+
     document.querySelectorAll('.event-btn').forEach((btn, i) => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.event-btn').forEach(b => b.classList.remove('active'));
@@ -632,9 +404,13 @@
 
         const set = EVENT_IMAGES[i + 1];
         if (!set) return;
+
+        // Logo & Tab: set trực tiếp (browser tự cache từ preload)
         logoEl.src = set.logo;
         tabEl.src  = set.tab;
-        bgEl.style.backgroundImage = `url('${set.bg}')`;
+
+        // Background: an toàn có fallback
+        safeSetBg(set.bg);
       });
     });
   </script>
